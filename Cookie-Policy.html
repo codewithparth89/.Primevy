@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookie Policy | Primevy - Luxury Fashion</title>
+    <!-- Font Awesome for professional line icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #faf9f8;
+            color: #1a1a1a;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header styling to match your site */
+        .policy-header {
+            background: #0a0a0a;
+            color: white;
+            padding: 2rem 1rem;
+            text-align: center;
+            border-bottom: 3px solid #c4a484;
+        }
+
+        .policy-header h1 {
+            font-size: 2.5rem;
+            letter-spacing: 2px;
+            font-weight: 300;
+            margin-bottom: 0.5rem;
+        }
+
+        .policy-header p {
+            color: #c4a484;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+            flex: 1;
+        }
+
+        /* Last updated badge */
+        .last-updated {
+            background: #f0e9e2;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            display: inline-block;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+            color: #5a5a5a;
+            border-left: 4px solid #c4a484;
+        }
+
+        /* Section styling */
+        .policy-section {
+            background: white;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.03);
+            border: 1px solid #eaeaea;
+        }
+
+        .policy-section h2 {
+            font-size: 1.6rem;
+            font-weight: 400;
+            margin-bottom: 1.5rem;
+            color: #1a1a1a;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .policy-section h2 span {
+            background: #c4a484;
+            color: white;
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .policy-section h3 {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin: 1.5rem 0 0.75rem;
+            color: #2c2c2c;
+        }
+
+        .policy-section p {
+            color: #4a4a4a;
+            margin-bottom: 1rem;
+        }
+
+        /* Cookie type table */
+        .cookie-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.95rem;
+        }
+
+        .cookie-table th {
+            background: #f5f0eb;
+            text-align: left;
+            padding: 12px 15px;
+            font-weight: 500;
+            color: #1a1a1a;
+            border-bottom: 2px solid #c4a484;
+        }
+
+        .cookie-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e0e0e0;
+            color: #4a4a4a;
+        }
+
+        .cookie-table tr:hover {
+            background: #fcf9f6;
+        }
+
+        /* List styling */
+        .styled-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .styled-list li {
+            padding: 0.5rem 0 0.5rem 1.8rem;
+            position: relative;
+            color: #4a4a4a;
+        }
+
+        .styled-list li::before {
+            content: "✓";
+            color: #c4a484;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        /* Contact box with line icons */
+        .contact-box {
+            background: #f5f0eb;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-top: 2rem;
+            border: 1px solid #dcd3cb;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .contact-item i {
+            width: 24px;
+            color: #c4a484;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+
+        .contact-item p {
+            margin-bottom: 0;
+            flex: 1;
+        }
+
+        .contact-item a {
+            color: #8b6b51;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1px dotted #8b6b51;
+        }
+
+        .contact-item a:hover {
+            color: #5a3f2e;
+            border-bottom: 1px solid #5a3f2e;
+        }
+
+        /* Footer styling - matching your main site */
+        .site-footer {
+            background: #0a0a0a;
+            color: #e0e0e0;
+            padding: 4rem 2rem 2rem;
+            margin-top: 4rem;
+            border-top: 3px solid #c4a484;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .footer-section h3 {
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 400;
+            letter-spacing: 1px;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: #c4a484;
+        }
+
+        .footer-section p {
+            color: #b0b0b0;
+            line-height: 1.8;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: #b0b0b0;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footer-links a i {
+            color: #c4a484;
+            font-size: 0.8rem;
+            transition: transform 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .footer-links a:hover i {
+            transform: translateX(4px);
+        }
+
+        .newsletter-form {
+            display: flex;
+            margin-top: 1rem;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 0.8rem;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            color: white;
+            font-size: 0.9rem;
+        }
+
+        .newsletter-input:focus {
+            outline: none;
+            border-color: #c4a484;
+        }
+
+        .newsletter-btn {
+            background: #c4a484;
+            border: none;
+            padding: 0 1.2rem;
+            color: #0a0a0a;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .newsletter-btn:hover {
+            background: #b39274;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.2rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            color: #b0b0b0;
+            font-size: 1.2rem;
+            transition: all 0.2s;
+        }
+
+        .social-links a:hover {
+            color: #c4a484;
+            transform: translateY(-2px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 3rem;
+            margin-top: 3rem;
+            border-top: 1px solid #222;
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        .footer-bottom a {
+            color: #c4a484;
+            text-decoration: none;
+        }
+
+        .footer-bottom a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .policy-header h1 {
+                font-size: 2rem;
+            }
+            
+            .container {
+                padding: 0 1rem;
+                margin: 2rem auto;
+            }
+            
+            .policy-section {
+                padding: 1.5rem;
+            }
+            
+            .cookie-table {
+                font-size: 0.85rem;
+            }
+            
+            .cookie-table th, 
+            .cookie-table td {
+                padding: 8px 10px;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="policy-header">
+        <h1>Cookie Policy</h1>
+        <p>Primevy • Luxury Redefined</p>
+    </header>
+
+    <main class="container">
+        <div class="last-updated">
+            <i class="far fa-calendar-alt" style="margin-right: 8px; color: #c4a484;"></i> Last Updated: March 2026 • Version 1.0
+        </div>
+
+        <!-- Introduction -->
+        <section class="policy-section">
+            <h2><span>1</span> Our Commitment to Transparency</h2>
+            <p>At Primevy, your privacy is paramount. This Cookie Policy explains how we use cookies and similar technologies to enhance your luxury shopping experience. By continuing to browse our site, you consent to our use of cookies in accordance with this policy.</p>
+            <p>We believe in complete transparency—every cookie we use serves to improve your journey, from discovering exclusive collections to seamless checkout.</p>
+        </section>
+
+        <!-- What are cookies -->
+        <section class="policy-section">
+            <h2><span>2</span> What Are Cookies?</h2>
+            <p>Cookies are small text files stored on your device when you visit our website. They help us remember your preferences, understand how you interact with our luxury collections, and personalize your experience—much like a personal stylist who remembers your taste.</p>
+            <p>These files are completely safe and cannot carry viruses or install malware on your device.</p>
+        </section>
+
+        <!-- How we use cookies -->
+        <section class="policy-section">
+            <h2><span>3</span> How Primevy Uses Cookies</h2>
+            <p>We use cookies to curate a shopping experience worthy of our discerning clientele:</p>
+            <ul class="styled-list">
+                <li><strong>Essential Operations:</strong> Keeping your cart items saved and maintaining secure checkout</li>
+                <li><strong>Remembering Preferences:</strong> Your currency, size preferences, and viewed items</li>
+                <li><strong>Exclusive Personalization:</strong> Recommending pieces that match your style</li>
+                <li><strong>Site Improvement:</strong> Understanding which collections captivate our visitors most</li>
+                <li><strong>Limited Authentication:</strong> Verifying your identity for exclusive preview access</li>
+            </ul>
+        </section>
+
+        <!-- Types of cookies we use (with table) -->
+        <section class="policy-section">
+            <h2><span>4</span> Types of Cookies We Use</h2>
+            <table class="cookie-table">
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Purpose</th>
+                        <th>Duration</th>
+                        <th>Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Essential</strong></td>
+                        <td>Cart functionality, security, checkout</td>
+                        <td>Session / 1 day</td>
+                        <td>cart_items, session_id</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Preference</strong></td>
+                        <td>Currency, language, recently viewed</td>
+                        <td>Up to 1 year</td>
+                        <td>currency_pref, size_chart</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Analytics</strong></td>
+                        <td>Page visits, popular products, site performance</td>
+                        <td>Up to 2 years</td>
+                        <td>_ga, _gid (Google Analytics)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Marketing</strong></td>
+                        <td>Personalized luxury recommendations</td>
+                        <td>Up to 90 days</td>
+                        <td>_fbp, IDE</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p style="margin-top: 1rem; font-size: 0.9rem;">Note: We use both first-party cookies (set by Primevy) and third-party cookies (set by trusted partners like Google and Meta) to refine your experience.</p>
+        </section>
+
+        <!-- Third-party cookies -->
+        <section class="policy-section">
+            <h2><span>5</span> Our Trusted Partners</h2>
+            <p>To deliver a world-class digital experience, we collaborate with select partners who may set cookies:</p>
+            <ul class="styled-list">
+                <li><strong>Google Analytics:</strong> Understanding how visitors discover our collections</li>
+                <li><strong>Meta Pixel:</strong> Showing you relevant luxury items on social platforms</li>
+                <li><strong>Payment Processors:</strong> Ensuring secure and seamless transactions</li>
+                <li><strong>Customer Support:</strong> Live chat assistance for concierge-level service</li>
+            </ul>
+            <p style="margin-top: 1rem;">These partners adhere to strict confidentiality standards and data protection regulations.</p>
+        </section>
+
+        <!-- Managing cookies -->
+        <section class="policy-section">
+            <h2><span>6</span> Your Choices: Managing Cookies</h2>
+            <p>You retain full control over your cookie preferences. Most luxury browsers allow you to manage cookies through settings:</p>
+            <h3>Browser Settings</h3>
+            <ul class="styled-list">
+                <li><strong>Chrome:</strong> Settings → Privacy and Security → Cookies</li>
+                <li><strong>Safari:</strong> Preferences → Privacy → Manage Website Data</li>
+                <li><strong>Firefox:</strong> Options → Privacy & Security → Cookies</li>
+                <li><strong>Edge:</strong> Settings → Cookies and site permissions</li>
+            </ul>
+            <h3 style="margin-top: 1.5rem;">Important Note</h3>
+            <p>Disabling certain cookies may affect your experience—for instance, you might need to re-enter preferences or see less relevant recommendations. Essential cookies cannot be disabled without impacting site functionality.</p>
+        </section>
+
+        <!-- Updates to policy -->
+        <section class="policy-section">
+            <h2><span>7</span> Updates to This Policy</h2>
+            <p>As we evolve our digital boutique, this Cookie Policy may be updated to reflect new technologies or regulatory requirements. We encourage you to review this page periodically. The "Last Updated" date at the top will always show the latest version.</p>
+            <p>Significant changes will be announced through a prominent notice on our homepage or via email for registered members.</p>
+        </section>
+
+        <!-- Contact information with line icons -->
+        <section class="policy-section">
+            <h2><span>8</span> Connect With Our Privacy Team</h2>
+            <div class="contact-box">
+                <div class="contact-item">
+                    <i class="far fa-envelope"></i>
+                    <p><strong>Email:</strong> <a href="mailto:privacy@primevy.luxury">privacy@primevy.luxury</a></p>
+                </div>
+                <div class="contact-item">
+                    <i class="far fa-clock"></i>
+                    <p><strong>Response Time:</strong> Within 24 hours</p>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-phone-alt"></i>
+                    <p><strong>Concierge:</strong> +1 (800) 123-4567 (24/7 White Glove Support)</p>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <p><strong>Address:</strong> Primevy Privacy Office, 123 Luxury Avenue, New York, NY 10022</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Consent reminder -->
+        <section class="policy-section" style="background: #faf4ef; border-left: 6px solid #c4a484;">
+            <h2 style="margin-bottom: 0.5rem;">Your Consent</h2>
+            <p style="margin-bottom: 0;">By continuing to browse Primevy, you confirm that you have read and understood this Cookie Policy. If you have any concerns, please reach out to our privacy team before proceeding.</p>
+        </section>
+    </main>
+
+    <!-- Footer matching your main site -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Primevy</h3>
+                <p>Curating the world's finest craftsmanship since 2015, where heritage meets modern innovation.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-pinterest"></i></a>
+                    <a href="#"><i class="fab fa-x-twitter"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> About Us</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Collections</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> New Arrivals</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Concierge</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Policies</h3>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Privacy Policy</a></li>
+                    <li><a href="cookie-policy.html"><i class="fas fa-chevron-right"></i> Cookie Policy</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Terms of Service</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Shipping & Returns</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Exclusive Access</h3>
+                <p>Receive private access to limited editions and luxury insights.</p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Your email" class="newsletter-input" required>
+                    <button type="submit" class="newsletter-btn"><i class="far fa-paper-plane"></i></button>
+                </form>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 Primevy. All rights reserved. | <a href="https://codewithparth89.github.io/_Primevy/">Return to Boutique</a></p>
+        </div>
+    </footer>
+
+    <!-- Font Awesome for icons (already linked in head) -->
+</body>
+</html>

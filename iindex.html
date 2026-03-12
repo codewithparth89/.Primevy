@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Primevy • Luxury Fashion & Lifestyle</title>
+    <!-- Link css -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
+
+</head>
+
+<body>
+    <header class="site-header">
+        <div style="display: flex; align-items: center; gap: 1rem;">
+            <div class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars"></i>
+            </div>
+            <div class="logo"><a href="index.html">PRIMEVY<span>.</span></a></div>
+        </div>
+        <nav class="nav-links">
+            <a href="index.html" class="active">HOME</a>
+            <a href="category.html?category=jewelry">JEWELRY</a>
+            <a href="category.html?category=beauty">BEAUTY</a>
+            <a href="category.html?category=clothing">CLOTHING</a>
+            <a href="category.html?category=footwear">FOOTWEAR</a>
+            <a href="category.html?category=Premium">PRIMIUM</a>
+        </nav>
+        <div class="header-icons">
+            <a href="search.html"><i class="fas fa-search"></i></a>
+            <a href="auth.html"><i class="far fa-user"></i></a>
+            <a href="wishlist.html">
+                <i class="far fa-heart"></i>
+                <span class="wishlist-count" id="wishlist-count">0</span>
+            </a>
+            <a href="cart.html">
+                <i class="fas fa-shopping-bag"></i>
+                <span class="cart-count" id="cart-count">0</span>
+            </a>
+        </div>
+    </header>
+</body>
+
+</html>

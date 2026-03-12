@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Primevy - FAQ & Support</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #C19A6B;
+            --secondary: #1a1a1a;
+            --accent: #D4AF37;
+            --light: #f8f8f8;
+            --dark: #0a0a0a;
+            --text: #e5e5e5;
+            --text-light: #a0a0a0;
+            --platinum: #e5e5e5;
+            --champagne: #f7efdc;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dark);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        .font-luxury {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .font-serif {
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .bg-gradient-premium {
+            background: linear-gradient(135deg, var(--dark) 0%, var(--secondary) 100%);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: var(--dark);
+            font-weight: 600;
+            padding: 14px 36px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(193, 154, 107, 0.3);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* FAQ Styles */
+        .faq-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .faq-category {
+            margin-bottom: 50px;
+        }
+
+        .category-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(193, 154, 107, 0.2);
+        }
+
+        .category-title::before {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+        }
+
+        .faq-item {
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.95) 0%, rgba(10, 10, 10, 0.95) 100%);
+            border: 1px solid rgba(193, 154, 107, 0.1);
+            border-radius: 12px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item.active {
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(193, 154, 107, 0.15);
+        }
+
+        .faq-question {
+            padding: 20px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 17px;
+        }
+
+        .faq-question:hover {
+            background: rgba(193, 154, 107, 0.05);
+        }
+
+        .faq-icon {
+            color: var(--primary);
+            font-size: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            padding: 0 25px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 0 25px 25px 25px;
+            max-height: 1000px;
+        }
+
+        /* Search Box */
+        .search-box {
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.95) 0%, rgba(10, 10, 10, 0.95) 100%);
+            border: 1px solid rgba(193, 154, 107, 0.2);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+
+        .search-input-container {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 16px 20px 16px 50px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(193, 154, 107, 0.3);
+            border-radius: 10px;
+            color: var(--text);
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(193, 154, 107, 0.2);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary);
+            font-size: 18px;
+        }
+
+        /* Quick Links */
+        .quick-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .quick-link {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: rgba(193, 154, 107, 0.05);
+            border: 1px solid rgba(193, 154, 107, 0.1);
+            border-radius: 10px;
+            color: var(--text);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .quick-link:hover {
+            background: rgba(193, 154, 107, 0.1);
+            transform: translateX(5px);
+            border-color: var(--primary);
+        }
+
+        .quick-link i {
+            margin-right: 12px;
+            color: var(--primary);
+            font-size: 18px;
+        }
+
+        /* Contact Card */
+        .contact-card {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 50px;
+            text-align: center;
+        }
+
+        .contact-card h3 {
+            color: var(--dark);
+            font-size: 24px;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .contact-card p {
+            color: rgba(10, 10, 10, 0.8);
+            margin-bottom: 20px;
+        }
+
+        /* Live Chat */
+        .live-chat {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+        }
+
+        .chat-button {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(193, 154, 107, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .chat-button:hover {
+            transform: scale(1.1);
+        }
+
+        .chat-button i {
+            color: var(--dark);
+            font-size: 24px;
+        }
+
+        /* Navigation Styles */
+        .navbar-luxury {
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(193, 154, 107, 0.1);
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--accent);
+            color: var(--dark);
+            font-size: 12px;
+            font-weight: bold;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .faq-question {
+                padding: 18px 20px;
+                font-size: 16px;
+            }
+            
+            .faq-answer {
+                padding: 0 20px;
+                font-size: 14px;
+            }
+            
+            .faq-item.active .faq-answer {
+                padding: 0 20px 20px 20px;
+            }
+            
+            .search-box {
+                padding: 20px;
+            }
+            
+            .contact-card {
+                padding: 20px;
+            }
+            
+            .quick-links {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .faq-item {
+            animation: fadeIn 0.5s ease forwards;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar-luxury shadow-lg sticky top-0 z-50">
+        <div class="nav-container">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="index.html" class="text-3xl font-bold font-luxury text-gradient tracking-tight">PRIMEVY</a>
+                    <span class="ml-3 text-xs text-accent uppercase tracking-[0.2em] hidden md:inline font-light">LUXURY</span>
+                </div>
+
+                <!-- Right Menu -->
+                <div class="flex items-center space-x-6">
+                    <!-- Cart -->
+                    <a href="cart.html" id="cart-link" class="text-gray-300 hover:text-primary transition-colors relative">
+                        <i class="fas fa-shopping-cart text-xl"></i>
+                        <span id="cart-badge" class="cart-badge">0</span>
+                    </a>
+                    
+                    <!-- Account -->
+                    <div class="relative">
+                        <button id="account-button" class="text-gray-300 hover:text-primary transition-colors flex items-center gap-2">
+                            <div class="w-9 h-9 rounded-full bg-gradient-to-r from-primary to-accent flex items-center justify-center">
+                                <i class="fas fa-user text-dark text-sm"></i>
+                            </div>
+                            <span class="hidden md:inline font-medium">Account</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative py-20 bg-gradient-premium">
+        <div class="nav-container">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="text-5xl md:text-6xl font-luxury font-bold mb-6">
+                    <span class="text-gradient">Frequently Asked</span> Questions
+                </h1>
+                <p class="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+                    Find answers to common questions about our luxury products and services
+                </p>
+                
+                <!-- Search Box -->
+                <div class="search-box">
+                    <h3 class="text-2xl font-luxury font-bold mb-6 text-primary">How can we help you today?</h3>
+                    <div class="search-input-container">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" 
+                               id="faq-search" 
+                               placeholder="Search for answers (e.g., shipping, returns, authentication)" 
+                               class="search-input">
+                    </div>
+                    
+                    <div class="quick-links">
+                        <a href="#orders-shipping" class="quick-link">
+                            <i class="fas fa-shipping-fast"></i>
+                            Orders & Shipping
+                        </a>
+                        <a href="#returns-refunds" class="quick-link">
+                            <i class="fas fa-exchange-alt"></i>
+                            Returns & Refunds
+                        </a>
+                        <a href="#product-info" class="quick-link">
+                            <i class="fas fa-gem"></i>
+                            Product Information
+                        </a>
+                        <a href="#account-payment" class="quick-link">
+                            <i class="fas fa-credit-card"></i>
+                            Account & Payment
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Content -->
+    <main class="py-16">
+        <div class="nav-container">
+            <div class="faq-container">
+                <!-- Orders & Shipping -->
+                <section id="orders-shipping" class="faq-category">
+                    <h2 class="category-title text-gradient">Orders & Shipping</h2>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>How do I place an order?</span>
+                            <i class="fas fa-plus faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Placing an order with Primevy Luxury is simple:</p>
+                            <ol style="margin: 10px 0 10px 20px;">
+                                <li>Browse our collections and select your desired items</li>
+                                <li>Click "Add to Cart" for each product</li>
+                                <li>Review your cart and proceed to checkout</li>
+                                <li>Enter your shipping and billing information</li>
+                                <li>Select your preferred payment method</li>
+                                <li>Confirm your order - you'll receive an order confirmation email</li>
+                            </ol>
+                            <p>For personalized assistance, our 24/7 concierge service is available to help you complete your purchase.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>What are your shipping options and timelines?</span>
+                            <i class="fas fa-plus faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>We offer several shipping options to ensure your luxury items arrive safely and promptly:</p>
+                            <ul style="margin: 10px 0;">
+                                <li><strong>Standard Shipping:</strong> 5-10 business days - Free on orders over ₹50,000</li>
+                                <li><strong>Express Shipping:</strong> 2-5 business days - ₹1,500 additional charge</li>
+                                <li><strong>Same-Day Delivery:</strong> Available in select metropolitan areas - ₹2,500</li>
+                                <li><strong>International Shipping:</strong> 7-15 business days - Rates calculated at checkout</li>
+                            </ul>
+                            <p>All orders are processed within 1-3 business days. You'll receive tracking information via email once your order ships.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>Do you ship internationally?</span>
+                            <i class="fas fa-plus faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes, we ship to over 50 countries worldwide. International shipping typically takes 7-15 business days. Please note:</p>
+                            <ul style="margin: 10px 0;">
+                                <li>Customs duties and import taxes are the responsibility of the recipient</li>
+                                <li>Shipping costs vary by destination and are calculated at checkout</li>
+                                <li>Some restrictions may apply to certain countries</li>
+                                <li>All international shipments include full insurance coverage</li>
+                            </ul>
+                            <p>For specific country information, please contact our concierge team.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>How can I track my order?</span>
+                            <i class="fas fa-plus faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Once your order has shipped, you'll receive an email with tracking information. You can also track your order by:</p>
+                            <ol style="margin: 10px 0 10px 20px;">
+                                <li>Logging into your account and visiting "Order History"</li>
+                                <li>Using the tracking link provided in your shipping confirmation email</li>
+                                <li>Contacting our concierge service with your order number</li>
+                            </ol>
+                            <p>For real-time tracking updates, download our mobile app from the App Store or Google Play.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Returns & Refunds -->
+                <section id="returns-refunds" class="faq-category">
+                    <h2 class="category-title text-gradient">Returns & Refunds</h2>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>What is your return policy?</span>
+                            <i class="fas fa-plus faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>We accept returns within 7 days of delivery. To be eligible for a return:</p>
+                            <ul style="margin: 10px 0;">
+                                <li>Items must be unused, unworn, and in original condition</li>
+                                <li>All original packaging, tags, and certificates must be included</li>
+                                <li>Items must be returned in the same condition as received</li>
+                                <li>A return authorization number is required (obtained from our concierge)</li>
+                            </ul>
+                            <p><strong>Non-returnable items:</strong> Gift cards, personalized items, final sale items, and intimate apparel.</p>
+                            <p>To initiate a return, please contact returns@primevy.com with your order number.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>How long does it take to process a refund?</span>
+                            <i class="fas fa-plus faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Once we receive your return and complete our quality inspection:</p>
+                            <ul style="margin: 10px 0;">
+                                <li>Refunds are typically processed within 7-10 business days</li>
+                                <li>Refunds are issued to the original payment method</li>
+                                <li>You'll receive an email confirmation once your refund is processed</li>
+                                <li>Shipping charges are non-refundable unless the return is due to our error</li>
+                            </ul>
+                            <p>Credit card refunds may take an additional 3-5 business days to appear on your statement, depending on your bank.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>Can I exchange an item?</span>
+                            <i class="fas fa-plus faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes, we offer exchanges within 7 days of delivery. Exchange options include:</p>
+                            <ul style="margin: 10px 0;">
+                                <li>Different size (subject to availability)</li>
+                                <li>Different color (subject to availability)</li>
+                                <li>Different product (price difference will be charged or refunded)</li>
+                            </ul>
+                            <p>To request an exchange:</p>
+                            <ol style="margin: 10px 0 10px 20px;">
+                                <li>Contact exchanges@primevy.com with your order number</li>
+                                <li>Specify the desired exchange item</li>
+                                <li>Our concierge will guide you through the process</li>
+                                <li>Shipping charges apply for both the return and new shipment</li>
+                            </ol>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Product Information -->
+                <section id="product-info" class="faq-category">
+                    <h2 class="category-title text-gradient">Product Information</h2>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>How do I ensure product authenticity?</span>
+                            <i class="fas fa-plus faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>All Primevy Luxury products are 100% authentic and sourced directly from authorized distributors or brands. We guarantee authenticity through:</p>
+                            <ul style="margin: 10px 0;">
+                                <li>Direct partnerships with luxury brands</li>
+                                <li>Rigorous authentication processes by our experts</li>
+                                <li>Serial numbers and authenticity certificates included with all applicable items</li>
+                                <li>Lifetime authenticity guarantee</li>
+                            </ul>
+                            <p>Each product includes a Certificate of Authenticity. You can verify your product's authenticity by:</p>
+                            <ol style="margin: 10px 0 10px 20px;">
+                                <li>Registering the serial number on the brand's official website</li>
+                                <li>Using our authenticity verification tool on your account dashboard</li>
+                                <li>Contacting our authentication team for verification</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>Do you offer product certificates and documentation?</span>
+                            <i class="fas fa-plus faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes, all applicable luxury items include complete documentation:</p>
+                            <ul style="margin: 10px 0;">
+                                <li><strong>Timepieces:</strong> Original papers, warranty card, and serial number documentation</li>
+                                <li><strong>Fine Jewelry:</strong> Gemological certificates, metal purity certificates</li>
+                                <li><strong>Luxury Goods:</strong> Authenticity cards, care booklets, and serial numbers</li>
+                                <li><strong>All Items:</strong> Primevy Luxury Certificate of Authenticity</li>
+                            </ul>
+                            <p>For investment-grade pieces, we provide additional documentation including:</p>
+                            <ul style="margin: 10px 0;">
+                                <li>Appraisal certificates from certified gemologists</li>
+                                <li>Historical provenance documentation (when available)</li>
+                                <li>Insurance valuation certificates</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>What are your care and maintenance recommendations?</span>
+                            <i class="fas fa-plus faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>To ensure your luxury items maintain their beauty and value:</p>
+                            
+                            <p><strong>Jewelry Care:</strong></p>
+                            <ul style="margin: 10px 0;">
+                                <li>Store in original boxes or anti-tarnish pouches</li>
+                                <li>Clean with soft, lint-free cloth after each wear</li>
+                                <li>Remove before swimming, bathing, or using chemicals</li>
+                                <li>Have professional cleaning every 6 months</li>
+                            </ul>
+
+                            <p><strong>Timepiece Care:</strong></p>
+                            <ul style="margin: 10px 0;">
+                                <li>Wind mechanical watches at the same time daily</li>
+                                <li>Keep away from strong magnetic fields</li>
+                                <li>Service every 3-5 years by authorized professionals</li>
+                                <li>Waterproof watches should be pressure tested annually</li>
+                            </ul>
+
+                            <p><strong>Leather Goods:</strong></p>
+                            <ul style="margin: 10px 0;">
+                                <li>Store with dust bags in cool, dry places</li>
+                                <li>Use leather conditioner every 3-6 months</li>
+                                <li>Protect from direct sunlight and moisture</li>
+                                <li>Stuff with tissue paper to maintain shape</li>
+                            </ul>
+
+                            <p>Detailed care instructions are included with each product.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Account & Payment -->
+                <section id="account-payment" class="faq-category">
+                    <h2 class="category-title text-gradient">Account & Payment</h2>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>What payment methods do you accept?</span>
+                            <i class="fas fa-plus faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>We accept the following secure payment methods:</p>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 15px 0;">
+                                <div style="background: rgba(193, 154, 107, 0.05); padding: 15px; border-radius: 8px;">
+                                    <p><strong>Credit/Debit Cards</strong></p>
+                                    <p style="color: var(--text-light); font-size: 14px;">Visa, MasterCard, American Express, Diners Club</p>
+                                </div>
+                                <div style="background: rgba(193, 154, 107, 0.05); padding: 15px; border-radius: 8px;">
+                                    <p><strong>Digital Wallets</strong></p>
+                                    <p style="color: var(--text-light); font-size: 14px;">Apple Pay, Google Pay, Samsung Pay</p>
+                                </div>
+                                <div style="background: rgba(193, 154, 107, 0.05); padding: 15px; border-radius: 8px;">
+                                    <p><strong>Bank Transfers</strong></p>
+                                    <p style="color: var(--text-light); font-size: 14px;">Wire transfer, UPI, Net Banking</p>
+                                </div>
+                                <div style="background: rgba(193, 154, 107, 0.05); padding: 15px; border-radius: 8px;">
+                                    <p><strong>Other Methods</strong></p>
+                                    <p style="color: var(--text-light); font-size: 14px;">EMI options available, Buy Now Pay Later</p>
+                                </div>
+                            </div>
+                            <p>All payments are processed through secure, encrypted gateways. We never store your full payment details.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>Is my payment information secure?</span>
+                            <i class="fas fa-plus faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes, we prioritize your security with multiple layers of protection:</p>
+                            <ul style="margin: 10px 0;">
+                                <li><strong>PCI-DSS Compliant:</strong> We adhere to the highest payment security standards</li>
+                                <li><strong>SSL Encryption:</strong> All transactions are encrypted with 256-bit SSL technology</li>
+                                <li><strong>Tokenization:</strong> Payment details are tokenized and never stored on our servers</li>
+                                <li><strong>3D Secure:</strong> Additional authentication for card transactions</li>
+                                <li><strong>Fraud Detection:</strong> Advanced AI-powered fraud prevention systems</li>
+                            </ul>
+                            <p>We also offer:</p>
+                            <ul style="margin: 10px 0;">
+                                <li>Purchase protection on all transactions</li>
+                                <li>Chargeback protection</li>
+                                <li>24/7 fraud monitoring</li>
+                                <li>Secure account verification for high-value transactions</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>How do I create and manage my account?</span>
+                            <i class="fas fa-plus faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Creating a Primevy Luxury account gives you access to exclusive benefits:</p>
+                            
+                            <p><strong>To Create an Account:</strong></p>
+                            <ol style="margin: 10px 0 10px 20px;">
+                                <li>Click "Account" in the top navigation</li>
+                                <li>Select "Create Account"</li>
+                                <li>Enter your email and create a password</li>
+                                <li>Verify your email address</li>
+                                <li>Complete your profile with personal details</li>
+                            </ol>
+
+                            <p><strong>Account Benefits:</strong></p>
+                            <ul style="margin: 10px 0;">
+                                <li>Order history and tracking</li>
+                                <li>Wishlist creation and management</li>
+                                <li>Exclusive member-only offers</li>
+                                <li>Early access to new collections</li>
+                                <li>Personalized recommendations</li>
+                                <li>Digital Certificate of Authenticity storage</li>
+                                <li>Service and maintenance reminders</li>
+                            </ul>
+
+                            <p>You can manage your account settings, communication preferences, and security options from your account dashboard.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Additional Questions -->
+                <section class="faq-category">
+                    <h2 class="category-title text-gradient">Additional Questions</h2>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>Do you offer gift wrapping and personalization?</span>
+                            <i class="fas fa-plus faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes, we offer premium gift services:</p>
+                            <ul style="margin: 10px 0;">
+                                <li><strong>Signature Gift Wrapping:</strong> ₹1,000 - Includes our signature gold foil wrapping, ribbon, and gift card</li>
+                                <li><strong>Premium Gift Box:</strong> ₹2,500 - Luxurious keepsake box with custom lining</li>
+                                <li><strong>Personalized Messages:</strong> Complimentary handwritten note</li>
+                                <li><strong>Gift Receipt:</strong> Discreet pricing for gift purchases</li>
+                                <li><strong>Special Occasion Packaging:</strong> Custom packaging for weddings, anniversaries</li>
+                            </ul>
+                            <p>To add gift services, select the option during checkout or contact our concierge team.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>What is your concierge service?</span>
+                            <i class="fas fa-plus faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Our 24/7 Concierge Service provides personalized luxury shopping assistance:</p>
+                            <ul style="margin: 10px 0;">
+                                <li><strong>Personal Shopping:</strong> Curated selections based on your preferences</li>
+                                <li><strong>Virtual Consultations:</strong> One-on-one video consultations with our experts</li>
+                                <li><strong>Special Requests:</strong> Hard-to-find items and limited editions</li>
+                                <li><strong>Gift Consulting:</strong> Personalized gift recommendations and coordination</li>
+                                <li><strong>Event Planning:</strong> Assistance with corporate gifting and special events</li>
+                                <li><strong>After-Sales Support:</strong> Maintenance, repairs, and authentication services</li>
+                            </ul>
+                            <p>Contact our concierge at +1 (888) LUX-PRIME or concierge@primevy.com.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>Do you offer corporate and bulk orders?</span>
+                            <i class="fas fa-plus faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes, we specialize in corporate gifting and bulk orders:</p>
+                            <ul style="margin: 10px 0;">
+                                <li><strong>Corporate Accounts:</strong> Dedicated account managers for businesses</li>
+                                <li><strong>Volume Discounts:</strong> Competitive pricing for bulk purchases</li>
+                                <li><strong>Custom Branding:</strong> Personalized packaging and branding options</li>
+                                <li><strong>International Shipping:</strong> Coordinated global delivery for corporate clients</li>
+                                <li><strong>Tax Documentation:</strong> Complete GST and tax invoices</li>
+                                <li><strong>Extended Payment Terms:</strong> Net 30/60 terms for qualified businesses</li>
+                            </ul>
+                            <p>Contact our corporate sales team at corporate@primevy.com or +1 (888) LUX-CORP.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Contact Card -->
+                <div class="contact-card">
+                    <h3>Still have questions?</h3>
+                    <p>Our luxury concierge team is available 24/7 to assist you with any inquiries.</p>
+                    <div style="display: flex; gap: 15px; justify-content: center; margin-top: 20px; flex-wrap: wrap;">
+                        <button onclick="window.location.href='tel:+18885897463'" class="btn-primary">
+                            <i class="fas fa-phone mr-2"></i>
+                            Call Concierge
+                        </button>
+                        <button onclick="window.location.href='mailto:concierge@primevy.com'" style="background: transparent; border: 2px solid var(--dark); color: var(--dark); padding: 14px 36px; border-radius: 10px; font-weight: 600; cursor: pointer;">
+                            <i class="fas fa-envelope mr-2"></i>
+                            Email Us
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Live Chat Button -->
+    <div class="live-chat">
+        <div class="chat-button" id="chat-button">
+            <i class="fas fa-comment-alt"></i>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer py-16">
+        <div class="nav-container">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+                <!-- Brand -->
+                <div>
+                    <a href="index.html" class="text-3xl font-luxury font-bold text-gradient tracking-tight mb-6 inline-block">PRIMEVY</a>
+                    <p class="text-gray-400 mb-8 leading-relaxed">
+                        Redefining luxury through curated excellence since 2015.
+                    </p>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="font-luxury text-xl font-semibold mb-6 text-primary">Quick Links</h3>
+                    <ul class="space-y-3">
+                        <li><a href="index.html" class="text-gray-400 hover:text-primary transition-colors">Home</a></li>
+                        <li><a href="terms.html" class="text-gray-400 hover:text-primary transition-colors">Terms & Policies</a></li>
+                        <li><a href="#orders-shipping" class="text-gray-400 hover:text-primary transition-colors">Shipping Info</a></li>
+                        <li><a href="#returns-refunds" class="text-gray-400 hover:text-primary transition-colors">Return Policy</a></li>
+                    </ul>
+                </div>
+
+                <!-- Support -->
+                <div>
+                    <h3 class="font-luxury text-xl font-semibold mb-6 text-primary">Support</h3>
+                    <ul class="space-y-3">
+                        <li><a href="faq.html" class="text-gray-400 hover:text-primary transition-colors">FAQ</a></li>
+                        <li><a href="contact.html" class="text-gray-400 hover:text-primary transition-colors">Contact Us</a></li>
+                        <li><a href="#product-info" class="text-gray-400 hover:text-primary transition-colors">Product Care</a></li>
+                        <li><a href="#account-payment" class="text-gray-400 hover:text-primary transition-colors">Account Help</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact -->
+                <div>
+                    <h3 class="font-luxury text-xl font-semibold mb-6 text-primary">Contact</h3>
+                    <ul class="space-y-4">
+                        <li class="text-gray-400 flex items-start gap-3">
+                            <i class="fas fa-phone text-primary mt-1"></i>
+                            <div>
+                                <div class="font-medium">24/7 Concierge</div>
+                                <div>+1 (888) LUX-PRIME</div>
+                            </div>
+                        </li>
+                        <li class="text-gray-400 flex items-start gap-3">
+                            <i class="fas fa-envelope text-primary mt-1"></i>
+                            <div>
+                                <div class="font-medium">Email</div>
+                                <div>concierge@primevy.com</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Bottom Footer -->
+            <div class="border-t border-primary/10 pt-12">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <div class="text-gray-400 text-sm mb-6 md:mb-0">
+                        &copy; 2015-2024 Primevy Luxury. All rights reserved.
+                    </div>
+                    <div class="flex items-center space-x-6">
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+                            <i class="fab fa-instagram text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+                            <i class="fab fa-facebook-f text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+                            <i class="fab fa-pinterest-p text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load cart from localStorage
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartBadge = document.getElementById('cart-badge');
+            
+            if (cartBadge) {
+                const totalItems = cart.reduce((total, item) => total + (item.quantity || 1), 0);
+                cartBadge.textContent = totalItems;
+            }
+
+            // FAQ Accordion Functionality
+            const faqItems = document.querySelectorAll('.faq-item');
+            
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                const answer = item.querySelector('.faq-answer');
+                
+                question.addEventListener('click', () => {
+                    // Close all other items
+                    faqItems.forEach(otherItem => {
+                        if (otherItem !== item) {
+                            otherItem.classList.remove('active');
+                        }
+                    });
+                    
+                    // Toggle current item
+                    item.classList.toggle('active');
+                });
+            });
+
+            // FAQ Search Functionality
+            const searchInput = document.getElementById('faq-search');
+            
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase().trim();
+                const allQuestions = document.querySelectorAll('.faq-question span');
+                const allAnswers = document.querySelectorAll('.faq-answer');
+                
+                if (searchTerm.length === 0) {
+                    // Reset all items
+                    faqItems.forEach(item => {
+                        item.style.display = 'block';
+                        item.classList.remove('active');
+                    });
+                    return;
+                }
+                
+                // Search through questions and answers
+                faqItems.forEach(item => {
+                    const question = item.querySelector('.faq-question span').textContent.toLowerCase();
+                    const answer = item.querySelector('.faq-answer').textContent.toLowerCase();
+                    
+                    if (question.includes(searchTerm) || answer.includes(searchTerm)) {
+                        item.style.display = 'block';
+                        item.classList.add('active'); // Open matching items
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+
+            // Live Chat Button
+            const chatButton = document.getElementById('chat-button');
+            
+            chatButton.addEventListener('click', function() {
+                const phoneNumber = '+18885897463';
+                const message = "Hello, I have a question about Primevy Luxury products.";
+                const whatsappURL = `https://wa.me/${phoneNumber.replace(/\D/g, '')}?text=${encodeURIComponent(message)}`;
+                
+                // Open WhatsApp in new tab
+                window.open(whatsappURL, '_blank');
+            });
+
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    
+                    if (href !== '#') {
+                        e.preventDefault();
+                        
+                        const targetId = href.substring(1);
+                        const targetElement = document.getElementById(targetId);
+                        
+                        if (targetElement) {
+                            // Close all FAQ items first
+                            faqItems.forEach(item => {
+                                item.classList.remove('active');
+                            });
+                            
+                            // Scroll to target
+                            window.scrollTo({
+                                top: targetElement.offsetTop - 100,
+                                behavior: 'smooth'
+                            });
+                        }
+                    }
+                });
+            });
+
+            // Add keyboard navigation
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    // Close all FAQ items on escape
+                    faqItems.forEach(item => {
+                        item.classList.remove('active');
+                    });
+                    
+                    // Clear search
+                    searchInput.value = '';
+                    faqItems.forEach(item => {
+                        item.style.display = 'block';
+                    });
+                }
+            });
+
+            // Auto-open first FAQ in each category on mobile
+            if (window.innerWidth < 768) {
+                const firstFaqs = document.querySelectorAll('.faq-category .faq-item:first-child');
+                firstFaqs.forEach(faq => {
+                    faq.classList.add('active');
+                });
+            }
+        });
+
+        // Add some sample data for testing
+        console.log('Primevy FAQ Page Loaded');
+        console.log('Features:');
+        console.log('- Search functionality');
+        console.log('- FAQ accordion with smooth animations');
+        console.log('- Live chat integration');
+        console.log('- Mobile responsive design');
+        console.log('- Luxury brand consistency');
+    </script>
+</body>
+</html>

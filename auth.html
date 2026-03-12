@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Primevy • Sign In / Sign Up | Luxury Fashion</title>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #faf9f8;
+            color: #1a1a1a;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .auth-header {
+            background: #0a0a0a;
+            color: white;
+            padding: 1.5rem 2rem;
+            border-bottom: 3px solid #c4a484;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 300;
+            letter-spacing: 3px;
+        }
+
+        .logo span {
+            color: #c4a484;
+            font-weight: 400;
+        }
+
+        .back-home {
+            color: #e0e0e0;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .back-home:hover {
+            color: #c4a484;
+        }
+
+        /* Main container */
+        .auth-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, #faf9f8 0%, #f0e9e2 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .auth-container::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(196,164,132,0.03) 0%, transparent 50%);
+            animation: rotate 40s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Auth card */
+        .auth-card {
+            background: white;
+            width: 100%;
+            max-width: 500px;
+            border-radius: 24px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.1), 0 10px 30px rgba(196,164,132,0.2);
+            overflow: hidden;
+            position: relative;
+            z-index: 10;
+            animation: slideUp 0.6s ease;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Tabs */
+        .auth-tabs {
+            display: flex;
+            border-bottom: 1px solid #eaeaea;
+        }
+
+        .auth-tab {
+            flex: 1;
+            padding: 1.5rem;
+            text-align: center;
+            background: transparent;
+            border: none;
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #999;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            letter-spacing: 1px;
+        }
+
+        .auth-tab.active {
+            color: #1a1a1a;
+        }
+
+        .auth-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: #c4a484;
+            animation: slideIn 0.3s;
+        }
+
+        @keyframes slideIn {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        /* Forms */
+        .auth-form {
+            padding: 2.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-wrapper i {
+            position: absolute;
+            left: 1rem;
+            color: #c4a484;
+            font-size: 1rem;
+            width: 20px;
+        }
+
+        .input-wrapper input,
+        .input-wrapper select,
+        .input-wrapper textarea {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            border: 2px solid #eaeaea;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            background: #fcf9f6;
+            font-family: inherit;
+        }
+
+        .input-wrapper textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .input-wrapper input:focus,
+        .input-wrapper select:focus,
+        .input-wrapper textarea:focus {
+            outline: none;
+            border-color: #c4a484;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(196,164,132,0.1);
+        }
+
+        .input-wrapper select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23c4a484' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+        }
+
+        /* Password strength */
+        .password-strength {
+            margin-top: 0.5rem;
+            height: 4px;
+            background: #eaeaea;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .strength-bar {
+            height: 100%;
+            width: 0;
+            transition: all 0.3s;
+        }
+
+        .strength-bar.weak { width: 33.33%; background: #ff6b6b; }
+        .strength-bar.medium { width: 66.66%; background: #f7b731; }
+        .strength-bar.strong { width: 100%; background: #20bf6b; }
+
+        .strength-text {
+            font-size: 0.8rem;
+            margin-top: 0.3rem;
+            color: #666;
+        }
+
+        /* Checkbox */
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin: 1.5rem 0;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #c4a484;
+        }
+
+        .checkbox-group label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .checkbox-group a {
+            color: #c4a484;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .checkbox-group a:hover {
+            text-decoration: underline;
+        }
+
+        /* Button */
+        .auth-btn {
+            width: 100%;
+            padding: 1.2rem;
+            background: #1a1a1a;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            letter-spacing: 1px;
+            margin-top: 1rem;
+        }
+
+        .auth-btn:hover:not(:disabled) {
+            background: #c4a484;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(196,164,132,0.3);
+        }
+
+        .auth-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .auth-btn i {
+            font-size: 1rem;
+        }
+
+        /* Divider */
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 2rem 0;
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #eaeaea;
+        }
+
+        /* Social buttons */
+        .social-auth {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .social-btn {
+            padding: 0.8rem;
+            border: 2px solid #eaeaea;
+            border-radius: 12px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+            color: #1a1a1a;
+        }
+
+        .social-btn:hover {
+            border-color: #c4a484;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .social-btn i {
+            font-size: 1.2rem;
+        }
+
+        .social-btn .fa-google { color: #DB4437; }
+        .social-btn .fa-facebook-f { color: #4267B2; }
+        .social-btn .fa-apple { color: #000; }
+
+        /* Verification Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 3rem;
+            border-radius: 24px;
+            max-width: 450px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+            animation: scaleIn 0.3s;
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-content i {
+            font-size: 4rem;
+            color: #c4a484;
+            margin-bottom: 1rem;
+        }
+
+        .modal-content h2 {
+            margin-bottom: 0.5rem;
+            color: #1a1a1a;
+        }
+
+        .modal-content p {
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .verification-inputs {
+            display: flex;
+            gap: 0.8rem;
+            justify-content: center;
+            margin: 2rem 0;
+        }
+
+        .verification-inputs input {
+            width: 60px;
+            height: 70px;
+            border: 2px solid #eaeaea;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 300;
+            transition: all 0.3s;
+        }
+
+        .verification-inputs input:focus {
+            border-color: #c4a484;
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(196,164,132,0.1);
+        }
+
+        .resend {
+            color: #999;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+
+        .resend a {
+            color: #c4a484;
+            text-decoration: none;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .resend a:hover {
+            text-decoration: underline;
+        }
+
+        /* Loading spinner */
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Messages */
+        .message-container {
+            padding: 0 2.5rem;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 1rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            animation: slideDown 0.3s;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 1rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            animation: slideDown 0.3s;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Footer */
+        .auth-footer {
+            text-align: center;
+            padding: 2rem;
+            background: #0a0a0a;
+            color: #888;
+            border-top: 1px solid #222;
+        }
+
+        .auth-footer a {
+            color: #c4a484;
+            text-decoration: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 500px) {
+            .auth-card {
+                border-radius: 16px;
+            }
+            
+            .auth-form {
+                padding: 1.5rem;
+            }
+            
+            .verification-inputs input {
+                width: 45px;
+                height: 55px;
+                font-size: 1.5rem;
+            }
+            
+            .social-auth {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="auth-header">
+        <div class="logo">PRIMEVY<span>.</span></div>
+        <a href="https://codewithparth89.github.io/_Primevy/" class="back-home">
+            <i class="fas fa-arrow-left"></i> Back to Boutique
+        </a>
+    </header>
+
+    <div class="auth-container">
+        <div class="auth-card">
+            <!-- Tabs -->
+            <div class="auth-tabs">
+                <button class="auth-tab active" onclick="switchTab('signin')" id="signin-tab">SIGN IN</button>
+                <button class="auth-tab" onclick="switchTab('signup')" id="signup-tab">SIGN UP</button>
+            </div>
+
+            <!-- Messages Container -->
+            <div id="message-container" class="message-container"></div>
+
+            <!-- Sign In Form -->
+            <div id="signin-form" class="auth-form">
+                <form onsubmit="handleSignIn(event)">
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <div class="input-wrapper">
+                            <i class="far fa-envelope"></i>
+                            <input type="email" placeholder="your@email.com" required id="signin-email">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Password</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" placeholder="••••••••" required id="signin-password">
+                        </div>
+                    </div>
+
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="remember">
+                        <label for="remember">Remember me</label>
+                        <a href="#" onclick="forgotPassword(event)" style="margin-left: auto;">Forgot password?</a>
+                    </div>
+
+                    <button type="submit" class="auth-btn" id="signin-btn">
+                        <i class="fas fa-sign-in-alt"></i> Sign In
+                    </button>
+
+                    <div class="divider">OR CONTINUE WITH</div>
+
+                    <div class="social-auth">
+                        <button type="button" class="social-btn" onclick="socialSignIn('google')">
+                            <i class="fab fa-google"></i> Google
+                        </button>
+                        <button type="button" class="social-btn" onclick="socialSignIn('facebook')">
+                            <i class="fab fa-facebook-f"></i> Facebook
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Sign Up Form (Hidden by default) -->
+            <div id="signup-form" class="auth-form" style="display: none;">
+                <form onsubmit="handleSignUp(event)">
+                    <!-- Personal Information -->
+                    <div class="form-group">
+                        <label>Full Name <span style="color: #c4a484;">*</span></label>
+                        <div class="input-wrapper">
+                            <i class="far fa-user"></i>
+                            <input type="text" placeholder="John Doe" required id="fullname">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email Address <span style="color: #c4a484;">*</span></label>
+                        <div class="input-wrapper">
+                            <i class="far fa-envelope"></i>
+                            <input type="email" placeholder="your@email.com" required id="email">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Phone Number <span style="color: #c4a484;">*</span></label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-phone-alt"></i>
+                            <input type="tel" placeholder="+91 98765 43210" required id="phone">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Date of Birth <span style="color: #c4a484;">*</span></label>
+                        <div class="input-wrapper">
+                            <i class="far fa-calendar-alt"></i>
+                            <input type="date" required id="dob">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Gender</label>
+                        <div class="input-wrapper">
+                            <i class="far fa-user"></i>
+                            <select id="gender">
+                                <option value="">Prefer not to say</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Address Information -->
+                    <div class="form-group">
+                        <label>Shipping Address</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <textarea id="address" placeholder="Street, City, State, PIN"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Style Preferences -->
+                    <div class="form-group">
+                        <label>Style Preferences</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-tshirt"></i>
+                            <select id="style" multiple size="3" style="height: auto;">
+                                <option value="jewelry">Jewelry & Accessories</option>
+                                <option value="watches">Luxury Watches</option>
+                                <option value="clothing">Designer Clothing</option>
+                                <option value="footwear">Premium Footwear</option>
+                                <option value="handbags">Handbags</option>
+                            </select>
+                        </div>
+                        <small style="color: #999;">Hold Ctrl/Cmd to select multiple</small>
+                    </div>
+
+                    <!-- Account Security -->
+                    <div class="form-group">
+                        <label>Password <span style="color: #c4a484;">*</span></label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" placeholder="Create a strong password" required id="password" onkeyup="checkPasswordStrength()">
+                        </div>
+                        <div class="password-strength">
+                            <div class="strength-bar" id="strength-bar"></div>
+                        </div>
+                        <div class="strength-text" id="strength-text">Enter a password</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Confirm Password <span style="color: #c4a484;">*</span></label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" placeholder="Re-enter password" required id="confirm-password">
+                        </div>
+                    </div>
+
+                    <!-- Preferences -->
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="offers" checked>
+                        <label for="offers">Receive exclusive offers and luxury insights</label>
+                    </div>
+
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="terms" required>
+                        <label for="terms">I agree to the <a href="terms-of-service.html">Terms of Service</a> and <a href="privacy-policy.html">Privacy Policy</a></label>
+                    </div>
+
+                    <button type="submit" class="auth-btn" id="signup-btn">
+                        <i class="fas fa-user-plus"></i> Create Account
+                    </button>
+
+                    <div class="divider">OR SIGN UP WITH</div>
+
+                    <div class="social-auth">
+                        <button type="button" class="social-btn" onclick="socialSignIn('google')">
+                            <i class="fab fa-google"></i> Google
+                        </button>
+                        <button type="button" class="social-btn" onclick="socialSignIn('facebook')">
+                            <i class="fab fa-facebook-f"></i> Facebook
+                        </button>
+                        <button type="button" class="social-btn" onclick="socialSignIn('apple')">
+                            <i class="fab fa-apple"></i> Apple
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Email Verification Modal -->
+    <div class="modal" id="verification-modal">
+        <div class="modal-content">
+            <i class="fas fa-envelope-open-text"></i>
+            <h2>Verify Your Email</h2>
+            <p>We've sent a verification link to <span id="verification-email" style="color: #c4a484;">your@email.com</span></p>
+            
+            <p style="margin: 1rem 0;">Please check your email and click the verification link to activate your account.</p>
+            
+            <button class="auth-btn" onclick="checkEmailVerification()" id="check-verification-btn">
+                <i class="fas fa-sync-alt"></i> I've Verified My Email
+            </button>
+
+            <div class="resend">
+                Didn't receive email? <a onclick="resendVerificationEmail()">Resend</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div class="modal" id="forgot-password-modal">
+        <div class="modal-content">
+            <i class="fas fa-key"></i>
+            <h2>Reset Password</h2>
+            <p>Enter your email to receive a password reset link.</p>
+            
+            <div class="form-group" style="margin: 2rem 0;">
+                <div class="input-wrapper">
+                    <i class="far fa-envelope"></i>
+                    <input type="email" placeholder="your@email.com" id="reset-email">
+                </div>
+            </div>
+            
+            <button class="auth-btn" onclick="sendPasswordReset()">
+                <i class="fas fa-paper-plane"></i> Send Reset Link
+            </button>
+
+            <div class="resend">
+                <a onclick="closeModal('forgot-password-modal')">Back to Sign In</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal" id="success-modal">
+        <div class="modal-content">
+            <i class="fas fa-check-circle" style="color: #20bf6b;"></i>
+            <h2 id="success-title">Welcome to Primevy!</h2>
+            <p id="success-message">Your account has been successfully created.</p>
+            <button class="auth-btn" onclick="redirectToDashboard()">
+                <i class="fas fa-arrow-right"></i> Continue
+            </button>
+        </div>
+    </div>
+
+    <footer class="auth-footer">
+        <p>&copy; 2026 Primevy. All rights reserved. | <a href="cookie-policy.html">Cookie Policy</a> | <a href="privacy-policy.html">Privacy</a> | <a href="terms-of-service.html">Terms</a></p>
+    </footer>
+
+    <script>
+        // Your Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBdig0navZd6v-W57ZIaKstQ_M7DushGjw",
+            authDomain: "prime-e6e11.firebaseapp.com",
+            databaseURL: "https://prime-e6e11-default-rtdb.firebaseio.com",
+            projectId: "prime-e6e11",
+            storageBucket: "prime-e6e11.firebasestorage.app",
+            messagingSenderId: "496246501275",
+            appId: "1:496246501275:web:f313ea73269ae51f7ffb3e",
+            measurementId: "G-E5ZXVC6JGQ"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const database = firebase.database();
+
+        // Tab switching
+        function switchTab(tab) {
+            const signinTab = document.getElementById('signin-tab');
+            const signupTab = document.getElementById('signup-tab');
+            const signinForm = document.getElementById('signin-form');
+            const signupForm = document.getElementById('signup-form');
+            
+            if (tab === 'signin') {
+                signinTab.classList.add('active');
+                signupTab.classList.remove('active');
+                signinForm.style.display = 'block';
+                signupForm.style.display = 'none';
+            } else {
+                signupTab.classList.add('active');
+                signinTab.classList.remove('active');
+                signupForm.style.display = 'block';
+                signinForm.style.display = 'none';
+            }
+        }
+
+        // Password strength checker
+        function checkPasswordStrength() {
+            const password = document.getElementById('password').value;
+            const bar = document.getElementById('strength-bar');
+            const text = document.getElementById('strength-text');
+            
+            let strength = 0;
+            
+            if (password.length >= 8) strength++;
+            if (password.match(/[a-z]/) && password.match(/[A-Z]/)) strength++;
+            if (password.match(/[0-9]/)) strength++;
+            if (password.match(/[^a-zA-Z0-9]/)) strength++;
+            
+            bar.className = 'strength-bar';
+            
+            if (password.length === 0) {
+                text.textContent = 'Enter a password';
+            } else if (strength === 1) {
+                bar.classList.add('weak');
+                text.textContent = 'Weak password';
+            } else if (strength === 2) {
+                bar.classList.add('medium');
+                text.textContent = 'Medium password';
+            } else if (strength >= 3) {
+                bar.classList.add('strong');
+                text.textContent = 'Strong password';
+            }
+        }
+
+        // Handle Sign Up with Firebase
+        async function handleSignUp(event) {
+            event.preventDefault();
+            
+            const signupBtn = document.getElementById('signup-btn');
+            const originalText = signupBtn.innerHTML;
+            signupBtn.innerHTML = '<span class="spinner"></span> Creating Account...';
+            signupBtn.disabled = true;
+            
+            try {
+                // Get form data
+                const fullname = document.getElementById('fullname').value;
+                const email = document.getElementById('email').value;
+                const phone = document.getElementById('phone').value;
+                const dob = document.getElementById('dob').value;
+                const gender = document.getElementById('gender').value;
+                const address = document.getElementById('address').value;
+                const style = Array.from(document.getElementById('style').selectedOptions).map(opt => opt.value);
+                const password = document.getElementById('password').value;
+                const confirmPassword = document.getElementById('confirm-password').value;
+                const offers = document.getElementById('offers').checked;
+                
+                // Validate
+                if (password !== confirmPassword) {
+                    throw new Error('Passwords do not match');
+                }
+                
+                if (password.length < 8) {
+                    throw new Error('Password must be at least 8 characters');
+                }
+                
+                // Validate age
+                const birthDate = new Date(dob);
+                const today = new Date();
+                let age = today.getFullYear() - birthDate.getFullYear();
+                const m = today.getMonth() - birthDate.getMonth();
+                if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+                    age--;
+                }
+                
+                if (age < 18) {
+                    throw new Error('You must be at least 18 years old');
+                }
+                
+                // Create user with Firebase
+                const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
+                const user = userCredential.user;
+                
+                // Update profile
+                await user.updateProfile({
+                    displayName: fullname
+                });
+                
+                // Send email verification
+                await user.sendEmailVerification();
+                
+                // Save additional user data to Realtime Database
+                await database.ref('users/' + user.uid).set({
+                    fullname: fullname,
+                    email: email,
+                    phone: phone,
+                    dob: dob,
+                    gender: gender,
+                    address: address,
+                    stylePreferences: style,
+                    offers: offers,
+                    createdAt: firebase.database.ServerValue.TIMESTAMP,
+                    lastLogin: firebase.database.ServerValue.TIMESTAMP
+                });
+                
+                // Show verification modal
+                document.getElementById('verification-email').textContent = email;
+                document.getElementById('verification-modal').classList.add('active');
+                
+                showMessage('Account created! Please verify your email.', 'success');
+                
+            } catch (error) {
+                showMessage(error.message, 'error');
+            } finally {
+                signupBtn.innerHTML = originalText;
+                signupBtn.disabled = false;
+            }
+        }
+
+        // Handle Sign In with Firebase
+        async function handleSignIn(event) {
+            event.preventDefault();
+            
+            const signinBtn = document.getElementById('signin-btn');
+            const originalText = signinBtn.innerHTML;
+            signinBtn.innerHTML = '<span class="spinner"></span> Signing In...';
+            signinBtn.disabled = true;
+            
+            try {
+                const email = document.getElementById('signin-email').value;
+                const password = document.getElementById('signin-password').value;
+                const remember = document.getElementById('remember').checked;
+                
+                // Set persistence
+                const persistence = remember ? 
+                    firebase.auth.Auth.Persistence.LOCAL : 
+                    firebase.auth.Auth.Persistence.SESSION;
+                await auth.setPersistence(persistence);
+                
+                // Sign in
+                const userCredential = await auth.signInWithEmailAndPassword(email, password);
+                const user = userCredential.user;
+                
+                // Check if email is verified
+                if (!user.emailVerified) {
+                    throw new Error('Please verify your email before signing in');
+                }
+                
+                // Update last login
+                await database.ref('users/' + user.uid).update({
+                    lastLogin: firebase.database.ServerValue.TIMESTAMP
+                });
+                
+                showMessage('Sign in successful! Redirecting...', 'success');
+                
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 1500);
+                
+            } catch (error) {
+                showMessage(error.message, 'error');
+            } finally {
+                signinBtn.innerHTML = originalText;
+                signinBtn.disabled = false;
+            }
+        }
+
+        // Social Sign In
+        async function socialSignIn(provider) {
+            let authProvider;
+            
+            switch(provider) {
+                case 'google':
+                    authProvider = new firebase.auth.GoogleAuthProvider();
+                    break;
+                case 'facebook':
+                    authProvider = new firebase.auth.FacebookAuthProvider();
+                    break;
+                case 'apple':
+                    authProvider = new firebase.auth.OAuthProvider('apple.com');
+                    break;
+                default:
+                    return;
+            }
+            
+            try {
+                const result = await auth.signInWithPopup(authProvider);
+                const user = result.user;
+                
+                // Check if user exists in database, if not create
+                const snapshot = await database.ref('users/' + user.uid).once('value');
+                if (!snapshot.exists()) {
+                    await database.ref('users/' + user.uid).set({
+                        fullname: user.displayName,
+                        email: user.email,
+                        photoURL: user.photoURL,
+                        createdAt: firebase.database.ServerValue.TIMESTAMP,
+                        lastLogin: firebase.database.ServerValue.TIMESTAMP
+                    });
+                } else {
+                    await database.ref('users/' + user.uid).update({
+                        lastLogin: firebase.database.ServerValue.TIMESTAMP
+                    });
+                }
+                
+                showMessage('Sign in successful! Redirecting...', 'success');
+                
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 1500);
+                
+            } catch (error) {
+                showMessage(error.message, 'error');
+            }
+        }
+
+        // Check email verification
+        async function checkEmailVerification() {
+            const user = auth.currentUser;
+            if (!user) return;
+            
+            await user.reload();
+            
+            if (user.emailVerified) {
+                document.getElementById('verification-modal').classList.remove('active');
+                document.getElementById('success-title').textContent = 'Email Verified!';
+                document.getElementById('success-message').textContent = 'Your email has been verified. Welcome to Primevy!';
+                document.getElementById('success-modal').classList.add('active');
+            } else {
+                showMessage('Email not verified yet. Please check your inbox.', 'error');
+            }
+        }
+
+        // Resend verification email
+        async function resendVerificationEmail() {
+            const user = auth.currentUser;
+            if (!user) return;
+            
+            try {
+                await user.sendEmailVerification();
+                showMessage('Verification email sent!', 'success');
+            } catch (error) {
+                showMessage(error.message, 'error');
+            }
+        }
+
+        // Forgot password
+        function forgotPassword(event) {
+            event.preventDefault();
+            document.getElementById('forgot-password-modal').classList.add('active');
+        }
+
+        // Send password reset
+        async function sendPasswordReset() {
+            const email = document.getElementById('reset-email').value;
+            
+            if (!email) {
+                showMessage('Please enter your email', 'error');
+                return;
+            }
+            
+            try {
+                await auth.sendPasswordResetEmail(email);
+                showMessage('Password reset email sent!', 'success');
+                closeModal('forgot-password-modal');
+            } catch (error) {
+                showMessage(error.message, 'error');
+            }
+        }
+
+        // Close modal
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        // Redirect to dashboard
+        function redirectToDashboard() {
+            window.location.href = 'dashboard.html';
+        }
+
+        // Show messages
+        function showMessage(message, type) {
+            const container = document.getElementById('message-container');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = type === 'success' ? 'success-message' : 'error-message';
+            messageDiv.innerHTML = `
+                <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
+                ${message}
+            `;
+            
+            container.innerHTML = '';
+            container.appendChild(messageDiv);
+            
+            setTimeout(() => {
+                messageDiv.remove();
+            }, 5000);
+        }
+
+        // Auth state observer
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                console.log('User logged in:', user.email);
+            }
+        });
+
+        // Check URL parameters
+        window.addEventListener('load', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('action') === 'signup') {
+                switchTab('signup');
+            }
+        });
+    </script>
+</body>
+</html>

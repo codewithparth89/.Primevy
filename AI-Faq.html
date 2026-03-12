@@ -1,0 +1,1436 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Primevy - FAQ & AI Concierge</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #C19A6B;
+            --secondary: #1a1a1a;
+            --accent: #D4AF37;
+            --dark: #0a0a0a;
+            --text: #e5e5e5;
+            --text-light: #a0a0a0;
+            --platinum: #e5e5e5;
+            --champagne: #f7efdc;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dark);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        .font-luxury {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .font-serif {
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .bg-gradient-premium {
+            background: linear-gradient(135deg, var(--dark) 0%, var(--secondary) 100%);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* FAQ Styles */
+        .faq-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .faq-category {
+            margin-bottom: 50px;
+        }
+
+        .category-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(193, 154, 107, 0.2);
+        }
+
+        .category-title::before {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+        }
+
+        .faq-item {
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.95) 0%, rgba(10, 10, 10, 0.95) 100%);
+            border: 1px solid rgba(193, 154, 107, 0.1);
+            border-radius: 12px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item.active {
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(193, 154, 107, 0.15);
+        }
+
+        .faq-question {
+            padding: 20px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 17px;
+        }
+
+        .faq-question:hover {
+            background: rgba(193, 154, 107, 0.05);
+        }
+
+        .faq-icon {
+            color: var(--primary);
+            font-size: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            padding: 0 25px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 0 25px 25px 25px;
+            max-height: 1000px;
+        }
+
+        /* Search Box */
+        .search-box {
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.95) 0%, rgba(10, 10, 10, 0.95) 100%);
+            border: 1px solid rgba(193, 154, 107, 0.2);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+
+        .search-input-container {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 16px 20px 16px 50px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(193, 154, 107, 0.3);
+            border-radius: 10px;
+            color: var(--text);
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(193, 154, 107, 0.2);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary);
+            font-size: 18px;
+        }
+
+        /* AI Chat Assistant Styles */
+        .ai-assistant-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+        }
+
+        .ai-chat-button {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(193, 154, 107, 0.3);
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+
+        .ai-chat-button:hover {
+            transform: scale(1.1);
+        }
+
+        .ai-chat-button i {
+            color: var(--dark);
+            font-size: 28px;
+        }
+
+        .gemini-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: linear-gradient(45deg, #4285F4, #34A853, #FBBC05, #EA4335);
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+            padding: 2px 8px;
+            border-radius: 12px;
+            animation: rainbow 3s infinite;
+        }
+
+        @keyframes rainbow {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .ai-chat-window {
+            position: absolute;
+            bottom: 90px;
+            right: 0;
+            width: 400px;
+            height: 600px;
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.98) 0%, rgba(10, 10, 10, 0.98) 100%);
+            border-radius: 20px;
+            border: 1px solid rgba(193, 154, 107, 0.3);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .ai-chat-window.active {
+            display: flex;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .ai-chat-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            padding: 20px;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .ai-chat-header h3 {
+            font-size: 18px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .ai-chat-close {
+            background: none;
+            border: none;
+            color: var(--dark);
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .ai-chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .ai-message {
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            position: relative;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .ai-message.bot {
+            background: rgba(193, 154, 107, 0.15);
+            border: 1px solid rgba(193, 154, 107, 0.2);
+            align-self: flex-start;
+            border-bottom-left-radius: 5px;
+        }
+
+        .ai-message.user {
+            background: rgba(212, 175, 55, 0.2);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            align-self: flex-end;
+            border-bottom-right-radius: 5px;
+        }
+
+        .ai-typing-indicator {
+            display: flex;
+            gap: 5px;
+            padding: 10px;
+            align-self: flex-start;
+        }
+
+        .ai-typing-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--primary);
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+
+        .ai-typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .ai-typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-10px); }
+        }
+
+        .ai-chat-input-container {
+            padding: 20px;
+            border-top: 1px solid rgba(193, 154, 107, 0.2);
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .ai-chat-input {
+            flex: 1;
+            padding: 12px 16px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(193, 154, 107, 0.3);
+            border-radius: 25px;
+            color: var(--text);
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .ai-chat-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(193, 154, 107, 0.2);
+        }
+
+        .ai-send-button {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            border: none;
+            border-radius: 50%;
+            color: var(--dark);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .ai-send-button:hover {
+            transform: scale(1.1);
+        }
+
+        .ai-quick-questions {
+            padding: 15px 20px;
+            border-top: 1px solid rgba(193, 154, 107, 0.2);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .ai-quick-question {
+            padding: 8px 15px;
+            background: rgba(193, 154, 107, 0.1);
+            border: 1px solid rgba(193, 154, 107, 0.2);
+            border-radius: 20px;
+            font-size: 13px;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .ai-quick-question:hover {
+            background: rgba(193, 154, 107, 0.2);
+            color: var(--text);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark);
+            border-top: 1px solid rgba(193, 154, 107, 0.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .faq-question {
+                padding: 18px 20px;
+                font-size: 16px;
+            }
+            
+            .faq-answer {
+                padding: 0 20px;
+                font-size: 14px;
+            }
+            
+            .faq-item.active .faq-answer {
+                padding: 0 20px 20px 20px;
+            }
+            
+            .search-box {
+                padding: 20px;
+            }
+            
+            .ai-chat-window {
+                width: 90vw;
+                height: 70vh;
+                right: 5vw;
+            }
+            
+            .ai-assistant-container {
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+
+        /* Navigation */
+        .navbar-luxury {
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(193, 154, 107, 0.1);
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--accent);
+            color: var(--dark);
+            font-size: 12px;
+            font-weight: bold;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar-luxury shadow-lg sticky top-0 z-50">
+        <div class="nav-container">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="index.html" class="text-3xl font-bold font-luxury text-gradient tracking-tight">PRIMEVY</a>
+                    <span class="ml-3 text-xs text-accent uppercase tracking-[0.2em] hidden md:inline font-light">LUXURY</span>
+                </div>
+
+                <!-- Right Menu -->
+                <div class="flex items-center space-x-6">
+                    <!-- Cart -->
+                    <a href="cart.html" id="cart-link" class="text-gray-300 hover:text-primary transition-colors relative">
+                        <i class="fas fa-shopping-cart text-xl"></i>
+                        <span id="cart-badge" class="cart-badge">0</span>
+                    </a>
+                    
+                    <!-- Account -->
+                    <div class="relative">
+                        <button id="account-button" class="text-gray-300 hover:text-primary transition-colors flex items-center gap-2">
+                            <div class="w-9 h-9 rounded-full bg-gradient-to-r from-primary to-accent flex items-center justify-center">
+                                <i class="fas fa-user text-dark text-sm"></i>
+                            </div>
+                            <span class="hidden md:inline font-medium">Account</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative py-20 bg-gradient-premium">
+        <div class="nav-container">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="text-5xl md:text-6xl font-luxury font-bold mb-6">
+                    <span class="text-gradient">Frequently Asked</span> Questions
+                </h1>
+                <p class="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+                    Find answers to common questions about our luxury products and services
+                </p>
+                
+                <!-- Search Box -->
+                <div class="search-box">
+                    <h3 class="text-2xl font-luxury font-bold mb-6 text-primary">How can we help you today?</h3>
+                    <div class="search-input-container">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" 
+                               id="faq-search" 
+                               placeholder="Search for answers (e.g., shipping, returns, authentication)" 
+                               class="search-input">
+                    </div>
+                    
+                    <div class="quick-links" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 30px;">
+                        <a href="#orders-shipping" class="quick-link" style="display: flex; align-items: center; padding: 15px; background: rgba(193, 154, 107, 0.05); border: 1px solid rgba(193, 154, 107, 0.1); border-radius: 10px; color: var(--text); text-decoration: none; transition: all 0.3s ease;">
+                            <i class="fas fa-shipping-fast" style="margin-right: 12px; color: var(--primary); font-size: 18px;"></i>
+                            Orders & Shipping
+                        </a>
+                        <a href="#returns-refunds" class="quick-link" style="display: flex; align-items: center; padding: 15px; background: rgba(193, 154, 107, 0.05); border: 1px solid rgba(193, 154, 107, 0.1); border-radius: 10px; color: var(--text); text-decoration: none; transition: all 0.3s ease;">
+                            <i class="fas fa-exchange-alt" style="margin-right: 12px; color: var(--primary); font-size: 18px;"></i>
+                            Returns & Refunds
+                        </a>
+                        <a href="#product-info" class="quick-link" style="display: flex; align-items: center; padding: 15px; background: rgba(193, 154, 107, 0.05); border: 1px solid rgba(193, 154, 107, 0.1); border-radius: 10px; color: var(--text); text-decoration: none; transition: all 0.3s ease;">
+                            <i class="fas fa-gem" style="margin-right: 12px; color: var(--primary); font-size: 18px;"></i>
+                            Product Information
+                        </a>
+                        <a href="#account-payment" class="quick-link" style="display: flex; align-items: center; padding: 15px; background: rgba(193, 154, 107, 0.05); border: 1px solid rgba(193, 154, 107, 0.1); border-radius: 10px; color: var(--text); text-decoration: none; transition: all 0.3s ease;">
+                            <i class="fas fa-credit-card" style="margin-right: 12px; color: var(--primary); font-size: 18px;"></i>
+                            Account & Payment
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Content -->
+    <main class="py-16">
+        <div class="nav-container">
+            <div class="faq-container">
+                <!-- Orders & Shipping -->
+                <section id="orders-shipping" class="faq-category">
+                    <h2 class="category-title text-gradient">Orders & Shipping</h2>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>How do I place an order?</span>
+                            <i class="fas fa-plus faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Placing an order with Primevy Luxury is simple:</p>
+                            <ol style="margin: 10px 0 10px 20px;">
+                                <li>Browse our collections and select your desired items</li>
+                                <li>Click "Add to Cart" for each product</li>
+                                <li>Review your cart and proceed to checkout</li>
+                                <li>Enter your shipping and billing information</li>
+                                <li>Select your preferred payment method</li>
+                                <li>Confirm your order - you'll receive an order confirmation email</li>
+                            </ol>
+                            <p>For personalized assistance, our 24/7 concierge service is available to help you complete your purchase.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>What are your shipping options and timelines?</span>
+                            <i class="fas fa-plus faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>We offer several shipping options to ensure your luxury items arrive safely and promptly:</p>
+                            <ul style="margin: 10px 0;">
+                                <li><strong>Standard Shipping:</strong> 5-10 business days - Free on orders over ₹50,000</li>
+                                <li><strong>Express Shipping:</strong> 2-5 business days - ₹1,500 additional charge</li>
+                                <li><strong>Same-Day Delivery:</strong> Available in select metropolitan areas - ₹2,500</li>
+                                <li><strong>International Shipping:</strong> 7-15 business days - Rates calculated at checkout</li>
+                            </ul>
+                            <p>All orders are processed within 1-3 business days. You'll receive tracking information via email once your order ships.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>Do you ship internationally?</span>
+                            <i class="fas fa-plus faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes, we ship to over 50 countries worldwide. International shipping typically takes 7-15 business days. Please note:</p>
+                            <ul style="margin: 10px 0;">
+                                <li>Customs duties and import taxes are the responsibility of the recipient</li>
+                                <li>Shipping costs vary by destination and are calculated at checkout</li>
+                                <li>Some restrictions may apply to certain countries</li>
+                                <li>All international shipments include full insurance coverage</li>
+                            </ul>
+                            <p>For specific country information, please contact our concierge team.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>How can I track my order?</span>
+                            <i class="fas fa-plus faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Once your order has shipped, you'll receive an email with tracking information. You can also track your order by:</p>
+                            <ol style="margin: 10px 0 10px 20px;">
+                                <li>Logging into your account and visiting "Order History"</li>
+                                <li>Using the tracking link provided in your shipping confirmation email</li>
+                                <li>Contacting our concierge service with your order number</li>
+                            </ol>
+                            <p>For real-time tracking updates, download our mobile app from the App Store or Google Play.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Returns & Refunds -->
+                <section id="returns-refunds" class="faq-category">
+                    <h2 class="category-title text-gradient">Returns & Refunds</h2>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>What is your return policy?</span>
+                            <i class="fas fa-plus faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>We accept returns within 7 days of delivery. To be eligible for a return:</p>
+                            <ul style="margin: 10px 0;">
+                                <li>Items must be unused, unworn, and in original condition</li>
+                                <li>All original packaging, tags, and certificates must be included</li>
+                                <li>Items must be returned in the same condition as received</li>
+                                <li>A return authorization number is required (obtained from our concierge)</li>
+                            </ul>
+                            <p><strong>Non-returnable items:</strong> Gift cards, personalized items, final sale items, and intimate apparel.</p>
+                            <p>To initiate a return, please contact returns@primevy.com with your order number.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>How long does it take to process a refund?</span>
+                            <i class="fas fa-plus faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Once we receive your return and complete our quality inspection:</p>
+                            <ul style="margin: 10px 0;">
+                                <li>Refunds are typically processed within 7-10 business days</li>
+                                <li>Refunds are issued to the original payment method</li>
+                                <li>You'll receive an email confirmation once your refund is processed</li>
+                                <li>Shipping charges are non-refundable unless the return is due to our error</li>
+                            </ul>
+                            <p>Credit card refunds may take an additional 3-5 business days to appear on your statement, depending on your bank.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>Can I exchange an item?</span>
+                            <i class="fas fa-plus faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes, we offer exchanges within 7 days of delivery. Exchange options include:</p>
+                            <ul style="margin: 10px 0;">
+                                <li>Different size (subject to availability)</li>
+                                <li>Different color (subject to availability)</li>
+                                <li>Different product (price difference will be charged or refunded)</li>
+                            </ul>
+                            <p>To request an exchange:</p>
+                            <ol style="margin: 10px 0 10px 20px;">
+                                <li>Contact exchanges@primevy.com with your order number</li>
+                                <li>Specify the desired exchange item</li>
+                                <li>Our concierge will guide you through the process</li>
+                                <li>Shipping charges apply for both the return and new shipment</li>
+                            </ol>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Product Information -->
+                <section id="product-info" class="faq-category">
+                    <h2 class="category-title text-gradient">Product Information</h2>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>How do I ensure product authenticity?</span>
+                            <i class="fas fa-plus faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>All Primevy Luxury products are 100% authentic and sourced directly from authorized distributors or brands. We guarantee authenticity through:</p>
+                            <ul style="margin: 10px 0;">
+                                <li>Direct partnerships with luxury brands</li>
+                                <li>Rigorous authentication processes by our experts</li>
+                                <li>Serial numbers and authenticity certificates included with all applicable items</li>
+                                <li>Lifetime authenticity guarantee</li>
+                            </ul>
+                            <p>Each product includes a Certificate of Authenticity. You can verify your product's authenticity by:</p>
+                            <ol style="margin: 10px 0 10px 20px;">
+                                <li>Registering the serial number on the brand's official website</li>
+                                <li>Using our authenticity verification tool on your account dashboard</li>
+                                <li>Contacting our authentication team for verification</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>Do you offer product certificates and documentation?</span>
+                            <i class="fas fa-plus faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes, all applicable luxury items include complete documentation:</p>
+                            <ul style="margin: 10px 0;">
+                                <li><strong>Timepieces:</strong> Original papers, warranty card, and serial number documentation</li>
+                                <li><strong>Fine Jewelry:</strong> Gemological certificates, metal purity certificates</li>
+                                <li><strong>Luxury Goods:</strong> Authenticity cards, care booklets, and serial numbers</li>
+                                <li><strong>All Items:</strong> Primevy Luxury Certificate of Authenticity</li>
+                            </ul>
+                            <p>For investment-grade pieces, we provide additional documentation including:</p>
+                            <ul style="margin: 10px 0;">
+                                <li>Appraisal certificates from certified gemologists</li>
+                                <li>Historical provenance documentation (when available)</li>
+                                <li>Insurance valuation certificates</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Contact Card -->
+                <div class="contact-card" style="background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%); border-radius: 15px; padding: 30px; margin-top: 50px; text-align: center;">
+                    <h3 style="color: var(--dark); font-size: 24px; margin-bottom: 15px; font-weight: 700;">Still have questions?</h3>
+                    <p style="color: rgba(10, 10, 10, 0.8); margin-bottom: 20px;">Our luxury concierge team is available 24/7 to assist you with any inquiries.</p>
+                    <div style="display: flex; gap: 15px; justify-content: center; margin-top: 20px; flex-wrap: wrap;">
+                        <button onclick="window.location.href='tel:+18885897463'" style="background: var(--dark); color: white; border: none; padding: 14px 36px; border-radius: 10px; font-weight: 600; cursor: pointer;">
+                            <i class="fas fa-phone mr-2"></i>
+                            Call Concierge
+                        </button>
+                        <button onclick="window.location.href='mailto:concierge@primevy.com'" style="background: transparent; border: 2px solid var(--dark); color: var(--dark); padding: 14px 36px; border-radius: 10px; font-weight: 600; cursor: pointer;">
+                            <i class="fas fa-envelope mr-2"></i>
+                            Email Us
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- AI Chat Assistant -->
+    <div class="ai-assistant-container">
+        <div class="ai-chat-button" id="aiChatButton">
+            <i class="fas fa-robot"></i>
+            <div class="gemini-badge">AI</div>
+        </div>
+        
+        <div class="ai-chat-window" id="aiChatWindow">
+            <div class="ai-chat-header">
+                <h3>
+                    <i class="fas fa-crown"></i>
+                    Primevy AI Concierge
+                    <span style="font-size: 12px; background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 10px; margin-left: 10px;">
+                        Powered by Gemini
+                    </span>
+                </h3>
+                <button class="ai-chat-close" id="aiChatClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="ai-chat-messages" id="aiChatMessages">
+                <!-- Initial greeting -->
+                <div class="ai-message bot">
+                    <p>👑 Welcome to Primevy Luxury! I'm your AI concierge powered by Google Gemini.</p>
+                    <p>I can help you with:</p>
+                    <ul style="margin-left: 20px; margin-top: 8px;">
+                        <li>Product information & availability</li>
+                        <li>Shipping & delivery queries</li>
+                        <li>Returns & exchange policies</li>
+                        <li>Order status & tracking</li>
+                        <li>Account assistance</li>
+                    </ul>
+                    <p style="margin-top: 10px; color: #34A853; font-size: 12px;">
+                        <i class="fas fa-check-circle"></i> Gemini AI is active and ready to assist!
+                    </p>
+                </div>
+            </div>
+            
+            <div class="ai-quick-questions">
+                <div class="ai-quick-question" data-question="What is your return policy?">Return Policy</div>
+                <div class="ai-quick-question" data-question="How do I track my order?">Track Order</div>
+                <div class="ai-quick-question" data-question="What payment methods do you accept?">Payment Methods</div>
+                <div class="ai-quick-question" data-question="Do you ship internationally?">International Shipping</div>
+            </div>
+            
+            <div class="ai-chat-input-container">
+                <input type="text" 
+                       class="ai-chat-input" 
+                       id="aiChatInput" 
+                       placeholder="Ask me anything about Primevy..."
+                       autocomplete="off">
+                <button class="ai-send-button" id="aiSendButton">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer py-16">
+        <div class="nav-container">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+                <!-- Brand -->
+                <div>
+                    <a href="index.html" class="text-3xl font-luxury font-bold text-gradient tracking-tight mb-6 inline-block">PRIMEVY</a>
+                    <p class="text-gray-400 mb-8 leading-relaxed">
+                        Redefining luxury through curated excellence since 2015.
+                    </p>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="font-luxury text-xl font-semibold mb-6 text-primary">Quick Links</h3>
+                    <ul class="space-y-3">
+                        <li><a href="index.html" class="text-gray-400 hover:text-primary transition-colors">Home</a></li>
+                        <li><a href="#orders-shipping" class="text-gray-400 hover:text-primary transition-colors">Shipping Info</a></li>
+                        <li><a href="#returns-refunds" class="text-gray-400 hover:text-primary transition-colors">Return Policy</a></li>
+                        <li><a href="#product-info" class="text-gray-400 hover:text-primary transition-colors">Product Care</a></li>
+                    </ul>
+                </div>
+
+                <!-- Support -->
+                <div>
+                    <h3 class="font-luxury text-xl font-semibold mb-6 text-primary">Support</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#faq" class="text-gray-400 hover:text-primary transition-colors">FAQ</a></li>
+                        <li><a href="contact.html" class="text-gray-400 hover:text-primary transition-colors">Contact Us</a></li>
+                        <li><a href="terms.html" class="text-gray-400 hover:text-primary transition-colors">Terms & Policies</a></li>
+                        <li><a href="#account-payment" class="text-gray-400 hover:text-primary transition-colors">Account Help</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact -->
+                <div>
+                    <h3 class="font-luxury text-xl font-semibold mb-6 text-primary">Contact</h3>
+                    <ul class="space-y-4">
+                        <li class="text-gray-400 flex items-start gap-3">
+                            <i class="fas fa-phone text-primary mt-1"></i>
+                            <div>
+                                <div class="font-medium">24/7 Concierge</div>
+                                <div>+1 (888) LUX-PRIME</div>
+                            </div>
+                        </li>
+                        <li class="text-gray-400 flex items-start gap-3">
+                            <i class="fas fa-envelope text-primary mt-1"></i>
+                            <div>
+                                <div class="font-medium">Email</div>
+                                <div>concierge@primevy.com</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Bottom Footer -->
+            <div class="border-t border-primary/10 pt-12">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <div class="text-gray-400 text-sm mb-6 md:mb-0">
+                        &copy; 2015-2024 Primevy Luxury. All rights reserved.
+                    </div>
+                    <div class="flex items-center space-x-6">
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+                            <i class="fab fa-instagram text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+                            <i class="fab fa-facebook-f text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+                            <i class="fab fa-pinterest-p text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // =============================================
+        // FAQ ACCORDION FUNCTIONALITY
+        // =============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            // FAQ Accordion
+            const faqItems = document.querySelectorAll('.faq-item');
+            
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                const answer = item.querySelector('.faq-answer');
+                
+                question.addEventListener('click', () => {
+                    // Close all other items
+                    faqItems.forEach(otherItem => {
+                        if (otherItem !== item) {
+                            otherItem.classList.remove('active');
+                        }
+                    });
+                    
+                    // Toggle current item
+                    item.classList.toggle('active');
+                });
+            });
+
+            // FAQ Search Functionality
+            const searchInput = document.getElementById('faq-search');
+            
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase().trim();
+                const allQuestions = document.querySelectorAll('.faq-question span');
+                const allAnswers = document.querySelectorAll('.faq-answer');
+                
+                if (searchTerm.length === 0) {
+                    // Reset all items
+                    faqItems.forEach(item => {
+                        item.style.display = 'block';
+                        item.classList.remove('active');
+                    });
+                    return;
+                }
+                
+                // Search through questions and answers
+                faqItems.forEach(item => {
+                    const question = item.querySelector('.faq-question span').textContent.toLowerCase();
+                    const answer = item.querySelector('.faq-answer').textContent.toLowerCase();
+                    
+                    if (question.includes(searchTerm) || answer.includes(searchTerm)) {
+                        item.style.display = 'block';
+                        item.classList.add('active'); // Open matching items
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    
+                    if (href !== '#') {
+                        e.preventDefault();
+                        
+                        const targetId = href.substring(1);
+                        const targetElement = document.getElementById(targetId);
+                        
+                        if (targetElement) {
+                            // Close all FAQ items first
+                            faqItems.forEach(item => {
+                                item.classList.remove('active');
+                            });
+                            
+                            // Scroll to target
+                            window.scrollTo({
+                                top: targetElement.offsetTop - 100,
+                                behavior: 'smooth'
+                            });
+                        }
+                    }
+                });
+            });
+
+            // Load cart from localStorage
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartBadge = document.getElementById('cart-badge');
+            
+            if (cartBadge) {
+                const totalItems = cart.reduce((total, item) => total + (item.quantity || 1), 0);
+                cartBadge.textContent = totalItems;
+            }
+        });
+
+        // =============================================
+        // GEMINI AI ASSISTANT
+        // =============================================
+        class PrimevyGeminiAssistant {
+            constructor() {
+                this.chatHistory = [];
+                this.isTyping = false;
+                this.geminiApiKey = "AIzaSyB0sWAOnsMJqzf2kg7GhOucXTJDnj99zGU"; // Your API key
+                this.initialize();
+            }
+            
+            initialize() {
+                this.createElements();
+                this.setupEventListeners();
+                this.loadChatHistory();
+                
+                // Auto-open after 5 seconds on first visit
+                if (!localStorage.getItem('primevy_first_visit')) {
+                    setTimeout(() => {
+                        this.toggleChat();
+                        localStorage.setItem('primevy_first_visit', 'true');
+                    }, 5000);
+                }
+            }
+            
+            createElements() {
+                // Elements are already in HTML, just get references
+                this.elements = {
+                    chatButton: document.getElementById('aiChatButton'),
+                    chatWindow: document.getElementById('aiChatWindow'),
+                    chatClose: document.getElementById('aiChatClose'),
+                    chatMessages: document.getElementById('aiChatMessages'),
+                    chatInput: document.getElementById('aiChatInput'),
+                    sendButton: document.getElementById('aiSendButton'),
+                    quickQuestions: document.querySelectorAll('.ai-quick-question')
+                };
+            }
+            
+            setupEventListeners() {
+                // Toggle chat
+                this.elements.chatButton.addEventListener('click', () => this.toggleChat());
+                this.elements.chatClose.addEventListener('click', () => this.closeChat());
+                
+                // Send message
+                this.elements.sendButton.addEventListener('click', () => this.sendMessage());
+                this.elements.chatInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
+                        this.sendMessage();
+                    }
+                });
+                
+                // Quick questions
+                this.elements.quickQuestions.forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const question = e.target.getAttribute('data-question');
+                        this.addMessage(question, 'user');
+                        this.processQuery(question);
+                    });
+                });
+                
+                // Keyboard shortcuts
+                document.addEventListener('keydown', (e) => {
+                    if (e.ctrlKey && e.key === '/') {
+                        e.preventDefault();
+                        this.toggleChat();
+                    }
+                    if (e.key === 'Escape' && this.elements.chatWindow.classList.contains('active')) {
+                        this.closeChat();
+                    }
+                });
+            }
+            
+            async callGeminiAPI(query) {
+                // Primevy Luxury-specific system prompt
+                const systemPrompt = `You are Primevy AI Concierge, the luxury shopping assistant for Primevy Luxury e-commerce.
+
+                COMPANY INFO:
+                - Luxury e-commerce brand established in 2015
+                - Curates premium fashion, accessories, lifestyle products
+                - Serves global clientele with discerning taste
+                - 24/7 personal concierge service available
+                
+                PRODUCTS:
+                - Timepieces & Luxury Watches
+                - Fine Jewelry & Diamonds
+                - Haute Couture & Designer Fashion
+                - Luxury Living & Home Decor
+                - Wellness & Beauty Products
+                - Leather Goods & Accessories
+                
+                POLICIES:
+                - Returns: 7 days, unused condition with original packaging
+                - Shipping: 1-3 day processing, 5-10 day standard delivery
+                - International: Ships to 50+ countries
+                - Authentication: 100% guaranteed with certificates
+                - Payment: All major cards, digital wallets, bank transfers
+                
+                RESPONSE GUIDELINES:
+                1. Be sophisticated, elegant, and helpful
+                2. Maintain luxury brand voice - refined but approachable
+                3. Provide accurate, specific information
+                4. When unsure, recommend contacting human concierge
+                5. Use ₹ symbol for Indian Rupees
+                6. Keep responses concise but complete
+                7. Add relevant emojis sparingly (👑✨💎)
+                8. End with a relevant follow-up question
+                
+                CURRENT OFFERS:
+                - Free shipping on orders over ₹50,000
+                - Express shipping available at extra cost
+                - Gift wrapping and personalization services
+                - Corporate accounts with special benefits
+                
+                CHAT HISTORY: ${JSON.stringify(this.chatHistory.slice(-5))}
+                
+                USER QUERY: "${query}"
+                
+                Provide a helpful response that maintains Primevy's luxury brand positioning:`;
+                
+                try {
+                    const response = await fetch(
+                        `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${this.geminiApiKey}`,
+                        {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                contents: [{
+                                    parts: [{
+                                        text: systemPrompt
+                                    }]
+                                }],
+                                generationConfig: {
+                                    temperature: 0.7,
+                                    topK: 40,
+                                    topP: 0.95,
+                                    maxOutputTokens: 1024
+                                },
+                                safetySettings: [
+                                    {
+                                        category: "HARM_CATEGORY_HARASSMENT",
+                                        threshold: "BLOCK_MEDIUM_AND_ABOVE"
+                                    },
+                                    {
+                                        category: "HARM_CATEGORY_HATE_SPEECH",
+                                        threshold: "BLOCK_MEDIUM_AND_ABOVE"
+                                    },
+                                    {
+                                        category: "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+                                        threshold: "BLOCK_MEDIUM_AND_ABOVE"
+                                    },
+                                    {
+                                        category: "HARM_CATEGORY_DANGEROUS_CONTENT",
+                                        threshold: "BLOCK_MEDIUM_AND_ABOVE"
+                                    }
+                                ]
+                            })
+                        }
+                    );
+                    
+                    if (!response.ok) {
+                        throw new Error(`API Error: ${response.status}`);
+                    }
+                    
+                    const data = await response.json();
+                    
+                    if (data.candidates && data.candidates[0] && data.candidates[0].content) {
+                        return data.candidates[0].content.parts[0].text;
+                    } else {
+                        throw new Error('Invalid response format');
+                    }
+                    
+                } catch (error) {
+                    console.error('Gemini API Error:', error);
+                    // Fallback to local responses
+                    return this.getFallbackResponse(query);
+                }
+            }
+            
+            async processQuery(query) {
+                this.showTypingIndicator();
+                
+                try {
+                    // Use Gemini AI
+                    const response = await this.callGeminiAPI(query);
+                    
+                    // Hide typing and show response
+                    setTimeout(() => {
+                        this.hideTypingIndicator();
+                        this.addMessage(response, 'bot');
+                        this.chatHistory.push({ role: 'assistant', content: response });
+                        this.saveChatHistory();
+                    }, 1000);
+                    
+                } catch (error) {
+                    this.hideTypingIndicator();
+                    const errorMsg = this.getFallbackResponse(query);
+                    this.addMessage(errorMsg, 'bot');
+                    this.chatHistory.push({ role: 'assistant', content: errorMsg });
+                    this.saveChatHistory();
+                }
+            }
+            
+            getFallbackResponse(query) {
+                const lowerQuery = query.toLowerCase();
+                
+                if (lowerQuery.includes('hello') || lowerQuery.includes('hi') || lowerQuery.includes('hey')) {
+                    return "👑 Welcome to Primevy Luxury! How may I assist you with your luxury shopping needs today?";
+                }
+                
+                if (lowerQuery.includes('return') || lowerQuery.includes('refund')) {
+                    return "Our return policy allows returns within 7 days of delivery. Items must be unused, in original packaging with all tags. Refunds are processed within 7-10 business days. Need more specific information?";
+                }
+                
+                if (lowerQuery.includes('ship') || lowerQuery.includes('deliver') || lowerQuery.includes('track')) {
+                    return "Standard shipping: 5-10 business days. Express: 2-5 days (extra charge). Free shipping on orders over ₹50,000. Once shipped, you'll receive tracking via email. Need help tracking a specific order?";
+                }
+                
+                if (lowerQuery.includes('pay') || lowerQuery.includes('card') || lowerQuery.includes('emi')) {
+                    return "We accept Visa, MasterCard, Amex, Diners, Apple Pay, Google Pay, bank transfers, UPI. EMI available above ₹25,000. All payments are secure and encrypted. Need specific payment assistance?";
+                }
+                
+                if (lowerQuery.includes('international') || lowerQuery.includes('global') || lowerQuery.includes('abroad')) {
+                    return "We ship to 50+ countries. International delivery: 7-15 business days. Customers handle customs duties. We provide all necessary documentation. Which country are you shipping to?";
+                }
+                
+                if (lowerQuery.includes('authentic') || lowerQuery.includes('real') || lowerQuery.includes('genuine')) {
+                    return "All products are 100% authentic with certificates. Lifetime authenticity guarantee. Each item includes Certificate of Authenticity and original documentation. Looking for specific authentication details?";
+                }
+                
+                if (lowerQuery.includes('price') || lowerQuery.includes('cost') || lowerQuery.includes('how much')) {
+                    return "Prices vary by product and collection. Could you specify which product you're interested in? You can browse our collections online or I can help you find specific pricing information.";
+                }
+                
+                return `Thank you for your question about "${query}". For detailed assistance, I recommend:\n\n1. Browsing our FAQ section above\n2. Contacting our 24/7 concierge at +1 (888) LUX-PRIME\n3. Exploring our product collections\n\nIs there anything specific about Primevy Luxury I can help you with?`;
+            }
+            
+            addMessage(text, sender) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `ai-message ${sender}`;
+                messageDiv.innerHTML = `<p>${this.formatMessage(text)}</p>`;
+                this.elements.chatMessages.appendChild(messageDiv);
+                this.scrollToBottom();
+                
+                if (sender === 'user') {
+                    this.chatHistory.push({ role: 'user', content: text });
+                    this.saveChatHistory();
+                }
+            }
+            
+            formatMessage(text) {
+                return text
+                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                    .replace(/\n/g, '<br>')
+                    .replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank" style="color: var(--primary);">$1</a>');
+            }
+            
+            showTypingIndicator() {
+                if (this.isTyping) return;
+                this.isTyping = true;
+                const typingDiv = document.createElement('div');
+                typingDiv.className = 'ai-typing-indicator';
+                typingDiv.id = 'typingIndicator';
+                typingDiv.innerHTML = `
+                    <div class="ai-typing-dot"></div>
+                    <div class="ai-typing-dot"></div>
+                    <div class="ai-typing-dot"></div>
+                `;
+                this.elements.chatMessages.appendChild(typingDiv);
+                this.scrollToBottom();
+            }
+            
+            hideTypingIndicator() {
+                this.isTyping = false;
+                const indicator = document.getElementById('typingIndicator');
+                if (indicator) indicator.remove();
+            }
+            
+            sendMessage() {
+                const message = this.elements.chatInput.value.trim();
+                if (!message) return;
+                
+                this.addMessage(message, 'user');
+                this.elements.chatInput.value = '';
+                this.processQuery(message);
+            }
+            
+            toggleChat() {
+                this.elements.chatWindow.classList.toggle('active');
+                if (this.elements.chatWindow.classList.contains('active')) {
+                    this.elements.chatInput.focus();
+                }
+            }
+            
+            closeChat() {
+                this.elements.chatWindow.classList.remove('active');
+            }
+            
+            loadChatHistory() {
+                const saved = localStorage.getItem('primevy_chat_history');
+                if (saved) {
+                    this.chatHistory = JSON.parse(saved);
+                }
+            }
+            
+            saveChatHistory() {
+                localStorage.setItem('primevy_chat_history', 
+                    JSON.stringify(this.chatHistory.slice(-50)));
+            }
+            
+            scrollToBottom() {
+                this.elements.chatMessages.scrollTop = this.elements.chatMessages.scrollHeight;
+            }
+        }
+
+        // =============================================
+        // INTEGRATION WITH FAQ PAGE
+        // =============================================
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize AI Assistant
+            window.primevyAI = new PrimevyGeminiAssistant();
+            
+            // Make FAQ questions clickable in AI chat
+            const faqQuestions = document.querySelectorAll('.faq-question');
+            faqQuestions.forEach(question => {
+                question.style.cursor = 'pointer';
+                question.addEventListener('click', function() {
+                    const questionText = this.querySelector('span').textContent;
+                    if (window.primevyAI) {
+                        window.primevyAI.toggleChat();
+                        setTimeout(() => {
+                            window.primevyAI.addMessage(questionText, 'user');
+                            window.primevyAI.processQuery(questionText);
+                        }, 500);
+                    }
+                });
+            });
+            
+            // Add "Ask AI" button to FAQ categories
+            const faqCategories = document.querySelectorAll('.faq-category');
+            faqCategories.forEach(category => {
+                const title = category.querySelector('.category-title');
+                const askButton = document.createElement('button');
+                askButton.innerHTML = '<i class="fas fa-robot"></i> Ask AI';
+                askButton.style.cssText = `
+                    margin-left: 15px;
+                    padding: 5px 15px;
+                    background: rgba(193, 154, 107, 0.2);
+                    border: 1px solid rgba(193, 154, 107, 0.5);
+                    border-radius: 15px;
+                    color: var(--primary);
+                    font-size: 12px;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                `;
+                askButton.onmouseover = () => {
+                    askButton.style.background = 'rgba(193, 154, 107, 0.3)';
+                    askButton.style.transform = 'translateY(-2px)';
+                };
+                askButton.onmouseout = () => {
+                    askButton.style.background = 'rgba(193, 154, 107, 0.2)';
+                    askButton.style.transform = 'translateY(0)';
+                };
+                askButton.onclick = () => {
+                    const sectionTitle = title.textContent.replace('🔗', '').trim();
+                    if (window.primevyAI) {
+                        window.primevyAI.toggleChat();
+                        setTimeout(() => {
+                            window.primevyAI.addMessage(`Tell me about ${sectionTitle}`, 'user');
+                            window.primevyAI.processQuery(`Tell me about ${sectionTitle}`);
+                        }, 500);
+                    }
+                };
+                title.appendChild(askButton);
+            });
+        });
+
+        // =============================================
+        // ADDITIONAL ENHANCEMENTS
+        // =============================================
+        // Voice input functionality (optional)
+        function setupVoiceInput() {
+            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                const voiceButton = document.createElement('button');
+                voiceButton.innerHTML = '<i class="fas fa-microphone"></i>';
+                voiceButton.style.cssText = `
+                    position: absolute;
+                    right: 60px;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    background: transparent;
+                    border: none;
+                    color: var(--primary);
+                    cursor: pointer;
+                `;
+                
+                const inputContainer = document.querySelector('.ai-chat-input-container');
+                inputContainer.style.position = 'relative';
+                inputContainer.appendChild(voiceButton);
+                
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                const recognition = new SpeechRecognition();
+                
+                recognition.continuous = false;
+                recognition.interimResults = false;
+                
+                voiceButton.addEventListener('click', () => {
+                    recognition.start();
+                    voiceButton.innerHTML = '<i class="fas fa-microphone-slash"></i>';
+                    voiceButton.style.color = '#EA4335';
+                });
+                
+                recognition.onresult = (event) => {
+                    const transcript = event.results[0][0].transcript;
+                    document.getElementById('aiChatInput').value = transcript;
+                    voiceButton.innerHTML = '<i class="fas fa-microphone"></i>';
+                    voiceButton.style.color = 'var(--primary)';
+                };
+                
+                recognition.onerror = () => {
+                    voiceButton.innerHTML = '<i class="fas fa-microphone"></i>';
+                    voiceButton.style.color = 'var(--primary)';
+                };
+            }
+        }
+
+        // Initialize voice input when page loads
+        document.addEventListener('DOMContentLoaded', setupVoiceInput);
+    </script>
+</body>
+</html>

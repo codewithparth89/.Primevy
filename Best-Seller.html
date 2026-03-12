@@ -1,0 +1,1511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Best Sellers • Primevy Luxury Fashion</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #faf9f8;
+            color: #1a1a1a;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .site-header {
+            background: #0a0a0a;
+            color: white;
+            padding: 1rem 2rem;
+            border-bottom: 3px solid #c4a484;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 300;
+            letter-spacing: 3px;
+        }
+
+        .logo span {
+            color: #c4a484;
+            font-weight: 400;
+        }
+
+        .logo a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #e0e0e0;
+            text-decoration: none;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #c4a484;
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .header-icons a {
+            color: white;
+            font-size: 1.2rem;
+            position: relative;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #c4a484;
+            color: #0a0a0a;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        /* Hero Section */
+        .bestseller-hero {
+            background: linear-gradient(135deg, #1a2a2a 0%, #2a3a3a 100%);
+            color: white;
+            padding: 5rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bestseller-hero::before {
+            content: '★';
+            position: absolute;
+            top: -20%;
+            left: -5%;
+            font-size: 30rem;
+            font-weight: 900;
+            color: rgba(196,164,132,0.05);
+            transform: rotate(15deg);
+            pointer-events: none;
+            font-family: Arial;
+        }
+
+        .bestseller-hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 50%, rgba(196,164,132,0.15) 0%, transparent 60%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero-content h1 {
+            font-size: 5rem;
+            font-weight: 300;
+            letter-spacing: 8px;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 1s ease;
+            text-shadow: 0 0 30px rgba(196,164,132,0.3);
+        }
+
+        .hero-content h1 span {
+            color: #c4a484;
+            font-weight: 400;
+            position: relative;
+            display: inline-block;
+        }
+
+        .hero-content h1 span::before {
+            content: '★';
+            position: absolute;
+            top: -20px;
+            right: -40px;
+            font-size: 2rem;
+            color: #c4a484;
+            animation: spin 4s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .hero-content p {
+            font-size: 1.3rem;
+            color: #e0e0e0;
+            margin-bottom: 3rem;
+            animation: fadeInUp 1s ease 0.2s both;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .stats-container {
+            display: flex;
+            justify-content: center;
+            gap: 4rem;
+            margin-top: 3rem;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 300;
+            color: #c4a484;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #e0e0e0;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            max-width: 1400px;
+            margin: 2rem auto 0;
+            padding: 0 2rem;
+            color: #999;
+        }
+
+        .breadcrumb a {
+            color: #666;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            color: #c4a484;
+        }
+
+        .breadcrumb .current {
+            color: #c4a484;
+            font-weight: 500;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+
+        /* Category Tabs */
+        .category-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .category-tab {
+            padding: 1rem 2.5rem;
+            border: 2px solid #eaeaea;
+            background: white;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1rem;
+            color: #666;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .category-tab i {
+            font-size: 1.1rem;
+        }
+
+        .category-tab:hover {
+            border-color: #c4a484;
+            color: #c4a484;
+        }
+
+        .category-tab.active {
+            background: #1a1a1a;
+            border-color: #1a1a1a;
+            color: white;
+        }
+
+        .category-tab.active i {
+            color: #c4a484;
+        }
+
+        /* Top Picks Section */
+        .top-picks {
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: #1a1a1a;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 1rem;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 2px;
+            background: #c4a484;
+        }
+
+        .top-picks-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .top-pick-card {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+            border: 1px solid rgba(196,164,132,0.2);
+        }
+
+        .top-pick-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(196,164,132,0.2);
+            border-color: #c4a484;
+        }
+
+        .top-pick-card.rank-1 {
+            transform: scale(1.02);
+            border: 2px solid #c4a484;
+        }
+
+        .rank-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #c4a484, #b39274);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 600;
+            z-index: 2;
+            box-shadow: 0 5px 15px rgba(196,164,132,0.3);
+        }
+
+        .rank-badge.gold {
+            background: linear-gradient(135deg, #FFD700, #DAA520);
+        }
+
+        .rank-badge.silver {
+            background: linear-gradient(135deg, #C0C0C0, #A0A0A0);
+        }
+
+        .rank-badge.bronze {
+            background: linear-gradient(135deg, #CD7F32, #B87333);
+        }
+
+        .top-pick-image {
+            height: 300px;
+            overflow: hidden;
+        }
+
+        .top-pick-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .top-pick-card:hover .top-pick-image img {
+            transform: scale(1.1);
+        }
+
+        .top-pick-info {
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .top-pick-category {
+            font-size: 0.8rem;
+            color: #c4a484;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+        }
+
+        .top-pick-name {
+            font-size: 1.3rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+        }
+
+        .top-pick-price {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 1rem;
+        }
+
+        .top-pick-stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .top-pick-stat {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .stat-value {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #c4a484;
+        }
+
+        .stat-label {
+            font-size: 0.7rem;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .rating {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .rating i {
+            color: #ffc107;
+            font-size: 1rem;
+        }
+
+        .rating span {
+            color: #666;
+            margin-left: 0.5rem;
+        }
+
+        .top-pick-btn {
+            background: #1a1a1a;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .top-pick-btn:hover {
+            background: #c4a484;
+        }
+
+        /* Filter Bar */
+        .filter-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+            background: white;
+            padding: 1.5rem 2rem;
+            border-radius: 16px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.03);
+            border: 1px solid #eaeaea;
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-tab {
+            padding: 0.5rem 1.2rem;
+            border: 2px solid #eaeaea;
+            background: white;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .filter-tab:hover,
+        .filter-tab.active {
+            background: #1a1a1a;
+            border-color: #1a1a1a;
+            color: white;
+        }
+
+        .sort-select {
+            padding: 0.5rem 2rem 0.5rem 1rem;
+            border: 2px solid #eaeaea;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            background: white;
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23c4a484' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.8rem center;
+        }
+
+        .sort-select:focus {
+            outline: none;
+            border-color: #c4a484;
+        }
+
+        /* Products Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            position: relative;
+            cursor: pointer;
+            border: 1px solid #eaeaea;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(196,164,132,0.15);
+            border-color: #c4a484;
+        }
+
+        .product-image {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 1;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+
+        .sales-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: linear-gradient(135deg, #c4a484, #b39274);
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 25px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            z-index: 2;
+        }
+
+        .sales-badge i {
+            font-size: 0.7rem;
+        }
+
+        .trending-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: linear-gradient(135deg, #ff6b6b, #e44d4d);
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 25px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            animation: pulse 2s infinite;
+            z-index: 2;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-category {
+            font-size: 0.75rem;
+            color: #c4a484;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .product-rank {
+            font-size: 0.75rem;
+            color: #999;
+            background: #f5f0eb;
+            padding: 0.2rem 0.5rem;
+            border-radius: 20px;
+        }
+
+        .product-name {
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: 0.8rem;
+            color: #1a1a1a;
+            line-height: 1.4;
+        }
+
+        .product-price {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .current-price {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .original-price {
+            font-size: 0.9rem;
+            color: #999;
+            text-decoration: line-through;
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .product-rating i {
+            color: #ffc107;
+            font-size: 0.8rem;
+        }
+
+        .product-rating span {
+            color: #666;
+            font-size: 0.8rem;
+            margin-left: 0.3rem;
+        }
+
+        .sales-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            font-size: 0.8rem;
+            color: #666;
+            background: #faf9f8;
+            padding: 0.5rem;
+            border-radius: 8px;
+        }
+
+        .sales-count {
+            color: #c4a484;
+            font-weight: 600;
+        }
+
+        .trend-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.2rem;
+            color: #20bf6b;
+        }
+
+        .trend-indicator i {
+            font-size: 0.7rem;
+        }
+
+        .add-to-cart {
+            width: 100%;
+            background: #1a1a1a;
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .add-to-cart:hover {
+            background: #c4a484;
+        }
+
+        /* Loading Skeleton */
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+            border-radius: 8px;
+        }
+
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .product-card.skeleton .product-image {
+            background: #e0e0e0;
+        }
+
+        .product-card.skeleton .product-info > div {
+            height: 20px;
+            margin-bottom: 10px;
+            background: #e0e0e0;
+        }
+
+        /* View All Button */
+        .view-all-container {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .view-all-btn {
+            background: transparent;
+            border: 2px solid #1a1a1a;
+            color: #1a1a1a;
+            padding: 1rem 4rem;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .view-all-btn:hover {
+            background: #1a1a1a;
+            color: white;
+        }
+
+        .view-all-btn i {
+            transition: transform 0.3s;
+        }
+
+        .view-all-btn:hover i {
+            transform: translateX(5px);
+        }
+
+        /* Footer */
+        .site-footer {
+            background: #0a0a0a;
+            color: #e0e0e0;
+            padding: 4rem 2rem 2rem;
+            border-top: 3px solid #c4a484;
+            margin-top: 4rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .footer-section h3 {
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 400;
+            letter-spacing: 1px;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: #c4a484;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: #b0b0b0;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footer-links a i {
+            color: #c4a484;
+            font-size: 0.8rem;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.2rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            color: #b0b0b0;
+            font-size: 1.2rem;
+            transition: all 0.2s;
+        }
+
+        .social-links a:hover {
+            color: #c4a484;
+            transform: translateY(-2px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 3rem;
+            margin-top: 3rem;
+            border-top: 1px solid #222;
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        .footer-bottom a {
+            color: #c4a484;
+            text-decoration: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .hero-content h1 {
+                font-size: 3.5rem;
+            }
+            
+            .stats-container {
+                gap: 2rem;
+            }
+            
+            .top-picks-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero-content h1 {
+                font-size: 2.5rem;
+                letter-spacing: 4px;
+            }
+            
+            .stats-container {
+                flex-wrap: wrap;
+            }
+            
+            .stat-number {
+                font-size: 2rem;
+            }
+            
+            .top-picks-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .top-pick-card.rank-1 {
+                transform: none;
+            }
+            
+            .filter-bar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .filter-tabs {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="logo"><a href="index.html">PRIMEVY<span>.</span></a></div>
+        <nav class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="category.html?category=jewelry">Jewelry</a>
+            <a href="category.html?category=watches">Watches</a>
+            <a href="category.html?category=clothing">Clothing</a>
+            <a href="category.html?category=footwear">Footwear</a>
+            <a href="category.html?category=handbags">Handbags</a>
+            <a href="new-arrivals.html">New</a>
+            <a href="limited-edition.html">Limited</a>
+            <a href="best-seller.html" class="active">Best Sellers</a>
+        </nav>
+        <div class="header-icons">
+            <a href="search.html"><i class="fas fa-search"></i></a>
+            <a href="auth.html"><i class="far fa-user"></i></a>
+            <a href="cart.html">
+                <i class="fas fa-shopping-bag"></i>
+                <span class="cart-count" id="cart-count">0</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="bestseller-hero">
+        <div class="hero-content">
+            <h1>BEST <span>SELLERS</span></h1>
+            <p>Discover the most loved pieces from our collection. Curated by our community, chosen by you.</p>
+            
+            <div class="stats-container" id="global-stats">
+                <!-- Will be populated dynamically -->
+                <div class="stat-item">
+                    <div class="stat-number">10K+</div>
+                    <div class="stat-label">Happy Clients</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">50K+</div>
+                    <div class="stat-label">Products Sold</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">4.8★</div>
+                    <div class="stat-label">Avg Rating</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <a href="index.html">Home</a> / <span class="current">Best Sellers</span>
+    </div>
+
+    <div class="container">
+        <!-- Category Tabs -->
+        <div class="category-tabs">
+            <button class="category-tab active" onclick="filterByCategory('all')">
+                <i class="fas fa-star"></i> All Best Sellers
+            </button>
+            <button class="category-tab" onclick="filterByCategory('jewelry')">
+                <i class="fas fa-gem"></i> Jewelry
+            </button>
+            <button class="category-tab" onclick="filterByCategory('watches')">
+                <i class="fas fa-clock"></i> Watches
+            </button>
+            <button class="category-tab" onclick="filterByCategory('clothing')">
+                <i class="fas fa-tshirt"></i> Clothing
+            </button>
+            <button class="category-tab" onclick="filterByCategory('footwear')">
+                <i class="fas fa-shoe-prints"></i> Footwear
+            </button>
+            <button class="category-tab" onclick="filterByCategory('handbags')">
+                <i class="fas fa-shopping-bag"></i> Handbags
+            </button>
+        </div>
+
+        <!-- Top 3 Picks -->
+        <div class="top-picks">
+            <div class="section-title">
+                <h2>TOP 3 THIS WEEK</h2>
+            </div>
+            
+            <div class="top-picks-grid" id="top-picks-grid">
+                <!-- Will be populated dynamically -->
+            </div>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="filter-bar">
+            <div class="filter-tabs">
+                <button class="filter-tab active" onclick="filterByTime('week')">This Week</button>
+                <button class="filter-tab" onclick="filterByTime('month')">This Month</button>
+                <button class="filter-tab" onclick="filterByTime('year')">This Year</button>
+                <button class="filter-tab" onclick="filterByTime('all')">All Time</button>
+            </div>
+            
+            <select class="sort-select" onchange="sortProducts()">
+                <option value="bestselling">Best Selling</option>
+                <option value="rating">Highest Rated</option>
+                <option value="price-low">Price: Low to High</option>
+                <option value="price-high">Price: High to Low</option>
+                <option value="trending">Trending</option>
+            </select>
+        </div>
+
+        <!-- Products Grid -->
+        <div class="products-grid" id="products-grid">
+            <!-- Products will be loaded here -->
+            <div class="product-card skeleton">
+                <div class="product-image skeleton"></div>
+                <div class="product-info">
+                    <div class="skeleton" style="width: 60%; height: 20px;"></div>
+                    <div class="skeleton" style="width: 80%; height: 20px;"></div>
+                    <div class="skeleton" style="width: 40%; height: 20px;"></div>
+                </div>
+            </div>
+            <div class="product-card skeleton">
+                <div class="product-image skeleton"></div>
+                <div class="product-info">
+                    <div class="skeleton" style="width: 60%; height: 20px;"></div>
+                    <div class="skeleton" style="width: 80%; height: 20px;"></div>
+                    <div class="skeleton" style="width: 40%; height: 20px;"></div>
+                </div>
+            </div>
+            <div class="product-card skeleton">
+                <div class="product-image skeleton"></div>
+                <div class="product-info">
+                    <div class="skeleton" style="width: 60%; height: 20px;"></div>
+                    <div class="skeleton" style="width: 80%; height: 20px;"></div>
+                    <div class="skeleton" style="width: 40%; height: 20px;"></div>
+                </div>
+            </div>
+            <div class="product-card skeleton">
+                <div class="product-image skeleton"></div>
+                <div class="product-info">
+                    <div class="skeleton" style="width: 60%; height: 20px;"></div>
+                    <div class="skeleton" style="width: 80%; height: 20px;"></div>
+                    <div class="skeleton" style="width: 40%; height: 20px;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- View All Button -->
+        <div class="view-all-container">
+            <button class="view-all-btn" onclick="loadMore()">
+                View All Best Sellers <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Primevy</h3>
+                <p>Curating the world's finest craftsmanship since 2015, where heritage meets modern innovation.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-pinterest"></i></a>
+                    <a href="#"><i class="fab fa-x-twitter"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="about.html"><i class="fas fa-chevron-right"></i> About Us</a></li>
+                    <li><a href="new-arrivals.html"><i class="fas fa-chevron-right"></i> New Arrivals</a></li>
+                    <li><a href="limited-edition.html"><i class="fas fa-chevron-right"></i> Limited Edition</a></li>
+                    <li><a href="best-seller.html"><i class="fas fa-chevron-right"></i> Best Sellers</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Categories</h3>
+                <ul class="footer-links">
+                    <li><a href="category.html?category=jewelry"><i class="fas fa-chevron-right"></i> Jewelry</a></li>
+                    <li><a href="category.html?category=watches"><i class="fas fa-chevron-right"></i> Watches</a></li>
+                    <li><a href="category.html?category=clothing"><i class="fas fa-chevron-right"></i> Clothing</a></li>
+                    <li><a href="category.html?category=footwear"><i class="fas fa-chevron-right"></i> Footwear</a></li>
+                    <li><a href="category.html?category=handbags"><i class="fas fa-chevron-right"></i> Handbags</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Policies</h3>
+                <ul class="footer-links">
+                    <li><a href="privacy-policy.html"><i class="fas fa-chevron-right"></i> Privacy Policy</a></li>
+                    <li><a href="cookie-policy.html"><i class="fas fa-chevron-right"></i> Cookie Policy</a></li>
+                    <li><a href="terms-of-service.html"><i class="fas fa-chevron-right"></i> Terms of Service</a></li>
+                    <li><a href="shipping-returns.html"><i class="fas fa-chevron-right"></i> Shipping & Returns</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 Primevy. All rights reserved. | <a href="index.html">Return to Boutique</a></p>
+        </div>
+    </footer>
+
+    <script>
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBdig0navZd6v-W57ZIaKstQ_M7DushGjw",
+            authDomain: "prime-e6e11.firebaseapp.com",
+            databaseURL: "https://prime-e6e11-default-rtdb.firebaseio.com",
+            projectId: "prime-e6e11",
+            storageBucket: "prime-e6e11.firebasestorage.app",
+            messagingSenderId: "496246501275",
+            appId: "1:496246501275:web:f313ea73269ae51f7ffb3e",
+            measurementId: "G-E5ZXVC6JGQ"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        // State
+        let allProducts = [];
+        let filteredProducts = [];
+        let currentCategory = 'all';
+        let currentTimeFilter = 'week';
+        let sortBy = 'bestselling';
+
+        // Initialize page
+        window.addEventListener('load', function() {
+            loadBestSellers();
+            updateCartCount();
+        });
+
+        // Load best sellers from Firebase
+        function loadBestSellers() {
+            showSkeletonLoaders();
+            
+            database.ref('products').orderByChild('sales').limitToLast(50).once('value')
+                .then((snapshot) => {
+                    const products = [];
+                    snapshot.forEach((childSnapshot) => {
+                        const product = childSnapshot.val();
+                        if (product.sales > 0) { // Only include products with sales
+                            products.push({
+                                id: childSnapshot.key,
+                                ...product
+                            });
+                        }
+                    });
+                    
+                    // Sort by sales (highest first)
+                    products.sort((a, b) => (b.sales || 0) - (a.sales || 0));
+                    
+                    allProducts = products;
+                    filteredProducts = [...products];
+                    
+                    displayTopPicks();
+                    displayProducts();
+                    updateGlobalStats();
+                })
+                .catch((error) => {
+                    console.error('Error loading products:', error);
+                });
+        }
+
+        // Show skeleton loaders
+        function showSkeletonLoaders() {
+            // Keep existing skeleton loaders
+        }
+
+        // Update global stats
+        function updateGlobalStats() {
+            const totalSales = allProducts.reduce((sum, p) => sum + (p.sales || 0), 0);
+            const avgRating = (allProducts.reduce((sum, p) => sum + (p.rating || 0), 0) / allProducts.length).toFixed(1);
+            
+            document.getElementById('global-stats').innerHTML = `
+                <div class="stat-item">
+                    <div class="stat-number">${allProducts.length}+</div>
+                    <div class="stat-label">Products</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">${totalSales.toLocaleString()}+</div>
+                    <div class="stat-label">Units Sold</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">${avgRating}★</div>
+                    <div class="stat-label">Avg Rating</div>
+                </div>
+            `;
+        }
+
+        // Display top 3 picks
+        function displayTopPicks() {
+            const top3 = allProducts.slice(0, 3);
+            const grid = document.getElementById('top-picks-grid');
+            
+            grid.innerHTML = top3.map((product, index) => {
+                const rankClass = index === 0 ? 'gold' : (index === 1 ? 'silver' : 'bronze');
+                
+                return `
+                <div class="top-pick-card rank-${index + 1}" onclick="goToProduct('${product.id}')">
+                    <div class="rank-badge ${rankClass}">${index + 1}</div>
+                    <div class="top-pick-image">
+                        <img src="${product.images?.[0] || 'https://via.placeholder.com/400x400'}" alt="${product.name}">
+                    </div>
+                    <div class="top-pick-info">
+                        <div class="top-pick-category">${product.brand}</div>
+                        <h3 class="top-pick-name">${product.name}</h3>
+                        <div class="top-pick-price">₹${product.price.toLocaleString()}</div>
+                        
+                        <div class="top-pick-stats">
+                            <div class="top-pick-stat">
+                                <span class="stat-value">${product.sales || 0}</span>
+                                <span class="stat-label">Sales</span>
+                            </div>
+                            <div class="top-pick-stat">
+                                <span class="stat-value">${(product.rating || 0).toFixed(1)}</span>
+                                <span class="stat-label">Rating</span>
+                            </div>
+                            <div class="top-pick-stat">
+                                <span class="stat-value">${product.reviews || 0}</span>
+                                <span class="stat-label">Reviews</span>
+                            </div>
+                        </div>
+                        
+                        <div class="rating">
+                            ${getRatingStars(product.rating)}
+                            <span>(${product.reviews || 0})</span>
+                        </div>
+                        
+                        <button class="top-pick-btn" onclick="event.stopPropagation(); addToCart('${product.id}')">
+                            <i class="fas fa-shopping-bag"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+            `}).join('');
+        }
+
+        // Get rating stars
+        function getRatingStars(rating) {
+            const fullStars = Math.floor(rating || 0);
+            const halfStar = (rating || 0) % 1 >= 0.5;
+            
+            let stars = '';
+            for (let i = 0; i < fullStars; i++) stars += '<i class="fas fa-star"></i>';
+            if (halfStar) stars += '<i class="fas fa-star-half-alt"></i>';
+            
+            return stars;
+        }
+
+        // Display products
+        function displayProducts() {
+            const grid = document.getElementById('products-grid');
+            
+            if (filteredProducts.length === 0) {
+                grid.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 4rem;">
+                        <i class="fas fa-star" style="font-size: 4rem; color: #c4a484; margin-bottom: 1rem;"></i>
+                        <h3>No Best Sellers Found</h3>
+                        <p style="color: #666;">Check back soon for trending products.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Show products (skip first 3 which are in top picks)
+            const productsToShow = filteredProducts.slice(3, 15);
+            
+            grid.innerHTML = productsToShow.map((product, index) => {
+                const trending = (product.trending || 0) > 20;
+                
+                return `
+                <div class="product-card" onclick="goToProduct('${product.id}')">
+                    <div class="product-image">
+                        <img src="${product.images?.[0] || 'https://via.placeholder.com/400x400'}" alt="${product.name}">
+                        <span class="sales-badge">
+                            <i class="fas fa-fire"></i> ${product.sales || 0} sold
+                        </span>
+                        ${trending ? '<span class="trending-badge"><i class="fas fa-chart-line"></i> Trending</span>' : ''}
+                    </div>
+                    <div class="product-info">
+                        <div class="product-header">
+                            <span class="product-category">${product.brand}</span>
+                            <span class="product-rank">#${index + 4} Seller</span>
+                        </div>
+                        <h3 class="product-name">${product.name}</h3>
+                        
+                        <div class="product-price">
+                            <span class="current-price">₹${product.price.toLocaleString()}</span>
+                            ${product.originalPrice ? `<span class="original-price">₹${product.originalPrice.toLocaleString()}</span>` : ''}
+                        </div>
+                        
+                        <div class="product-rating">
+                            ${getRatingStars(product.rating)}
+                            <span>(${product.reviews || 0})</span>
+                        </div>
+                        
+                        <div class="sales-info">
+                            <span><i class="far fa-clock"></i> Sold ${product.sales || 0} times</span>
+                            <span class="trend-indicator">
+                                <i class="fas fa-arrow-up"></i> +${product.trending || 0}% this week
+                            </span>
+                        </div>
+                        
+                        <button class="add-to-cart" onclick="event.stopPropagation(); addToCart('${product.id}')">
+                            <i class="fas fa-shopping-bag"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+            `}).join('');
+        }
+
+        // Filter by category
+        function filterByCategory(category) {
+            currentCategory = category;
+            
+            // Update active tab
+            document.querySelectorAll('.category-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+            
+            // Apply filter
+            if (category === 'all') {
+                filteredProducts = [...allProducts];
+            } else {
+                filteredProducts = allProducts.filter(p => p.category === category);
+            }
+            
+            displayTopPicks();
+            displayProducts();
+        }
+
+        // Filter by time
+        function filterByTime(time) {
+            currentTimeFilter = time;
+            
+            // Update active tab
+            document.querySelectorAll('.filter-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+            
+            // In a real app, this would filter by date
+            // For now, just resort based on time filter
+            sortProducts();
+        }
+
+        // Sort products
+        function sortProducts() {
+            const sortValue = document.getElementById('sort').value;
+            sortBy = sortValue;
+            
+            switch(sortValue) {
+                case 'rating':
+                    filteredProducts.sort((a, b) => (b.rating || 0) - (a.rating || 0));
+                    break;
+                case 'price-low':
+                    filteredProducts.sort((a, b) => a.price - b.price);
+                    break;
+                case 'price-high':
+                    filteredProducts.sort((a, b) => b.price - a.price);
+                    break;
+                case 'trending':
+                    filteredProducts.sort((a, b) => (b.trending || 0) - (a.trending || 0));
+                    break;
+                default: // bestselling
+                    filteredProducts.sort((a, b) => (b.sales || 0) - (a.sales || 0));
+                    break;
+            }
+            
+            displayTopPicks();
+            displayProducts();
+        }
+
+        // Load more products
+        function loadMore() {
+            // In a real app, this would load the next page
+            // For now, just scroll to products
+            document.querySelector('.products-grid').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Navigate to product page
+        function goToProduct(productId) {
+            window.location.href = `product.html?id=${productId}`;
+        }
+
+        // Add to cart
+        function addToCart(productId) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const product = allProducts.find(p => p.id === productId);
+            
+            if (product) {
+                cart.push({
+                    id: productId,
+                    name: product.name,
+                    price: product.price,
+                    image: product.images?.[0]
+                });
+                
+                localStorage.setItem('cart', JSON.stringify(cart));
+                updateCartCount();
+                showNotification('Added to cart', 'success');
+            }
+        }
+
+        // Update cart count
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            document.getElementById('cart-count').textContent = cart.length;
+        }
+
+        // Show notification
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.innerHTML = `
+                <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
+                ${message}
+            `;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? '#d4edda' : '#f8d7da'};
+                color: ${type === 'success' ? '#155724' : '#721c24'};
+                padding: 1rem 2rem;
+                border-radius: 8px;
+                border-left: 4px solid ${type === 'success' ? '#20bf6b' : '#e44d4d'};
+                z-index: 1000;
+                animation: slideIn 0.3s;
+                box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        // Add notification styles
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Auth state observer
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                document.querySelector('.header-icons a[href="auth.html"] i').className = 'fas fa-user-check';
+            }
+        });
+    </script>
+</body>
+</html>
